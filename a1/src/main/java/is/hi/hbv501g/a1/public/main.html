@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  Names: Ingólfur and Logi
+  Date: 17.09.24
+  Course: HBV501G Hugbúnaðarverkefni 1
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BestDeal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div id="navbar">
+      <nav id="user-navbar">
+        <a class="navbar-item" href="main.html">Home</a>
+        <a class="navbar-item" href="profile.html">My Profile</a>
+        <a id="cart" class="navbar-item" href="checkout.html">Cart</a>
+      </nav>
+      <br>
+      <nav id="category-navbar">
+        <a class="navbar-item" href="items.html?category=clothing">Clothing</a>
+        <a class="navbar-item" href="items.html?category=kitchen">Kitchen Goods</a>
+        <a class="navbar-item" href="items.html?category=electronics">Electronics</a>
+      </nav>
+    </div>
+    <header>
+      <h1>Shop the Best Deals!</h1>
+      <p class="block">
+        by Ingolfur and Logi
+      </p>
+    </header>
+    <main>
+      <section id="curr-deal">
+        <h2>Mother's Day Special Deals</h2>
+        <section>
+          <img src="https://i.etsystatic.com/32186191/r/il/b0d31d/3810512077/il_1588xN.3810512077_ge29.jpg" alt="flowers">
+          <p>
+            Shop our collection of
+            <a href="items.html?category=Mothers_Day">best gifts for moms</a>
+            . Get the best things for mom!
+          </p>
+        </section>
+      </section>
+      <section id="whats-new-bar">
+        <h2>What's new?</h2>
+        <p>View new deals and trending items</p>
+        <div id="whats-new-bar-items">
+          <a href="items.html">
+            <img src="img/icon1.png" alt="shooting star icon">
+            <br>
+            <p>newly listed</p>
+          </a>
+          <a href="items.html">
+            <img src="img/icon2.png" alt="rocket icon">
+            <br>
+            <p>new deals</p>
+          </a>
+          <a href="items.html">
+            <img src="img/icon3.png" alt="the moon and a flag icon">
+            <br>
+            <p>clothing</p>
+          </a>
+          <a href="items.html">
+            <img src="img/icon3.png" alt="the moon and a flag icon">
+            <br>
+            <p>home goods</p>
+          </a>
+          <a href="items.html">
+            <img src="img/icon3.png" alt="the moon and a flag icon">
+            <br>
+            <p>electronics</p>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        © 2024 Verzla ehf. Allur réttur áskilinn.
+      </p>
+    </footer>
+    <script src="index.js"></script>
+  </body>
+</html>

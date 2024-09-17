@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+  Names: Ingólfur and Logi
+  Date: 17.09.24
+  Course: HBV501G Hugbúnaðarverkefni 1
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BestDeal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="navbar">
+      <nav id="user-navbar">
+      <a class="navbar-item" href="main.html">Home</a>
+      <a class="navbar-item" href="profile.html">My Profile</a>
+      <a class="navbar-item" href="checkout.html">Cart</a>
+      </nav>
+      <br>
+      <nav id="category-navbar">
+      <a class="navbar-item" href="items.html?category=clothing">Clothing</a>
+      <a class="navbar-item" href="items.html?category=kitchen">Kitchen Goods</a>
+      <a class="navbar-item" href="items.html?category=electronics">Electronics</a>
+      </nav>
+    </div>
+    <main>
+      <article id="one-item-page">
+        <img id = one-item-image>
+        <section id="one-item-detail">
+          <h2 id="one-item-name"></h2>
+          <h3>$ USD <span id="one-item-price"></span></h3>
+          <h3>Description:</h3>
+          <p id="one-item-description"></p>
+          <br>
+          <button id="add-to-cart-button">add to cart</button>
+        </section>
+      </article>
+    </main>
+    <footer>
+      <p>
+      Portions of this page &copy;2020 CSE 154
+      All other attributions cited in page source.
+      </p>
+    </footer>
+    <script src="oneItem.js"></script>
+  </body>
+</html>

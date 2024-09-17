@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+  Names: Ingólfur and Logi
+  Date: 17.09.24
+  Course: HBV501G Hugbúnaðarverkefni 1
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BestDeal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="navbar">
+      <nav id="user-navbar">
+        <a class="navbar-item" href="main.html">Home</a>
+        <a class="navbar-item" href="profile.html">My Profile</a>
+        <a class="navbar-item" href="checkout.html">Cart</a>
+      </nav>
+      <br>
+      <nav id="category-navbar">
+        <a class="navbar-item" href="items.html?category=clothing">Clothing</a>
+        <a class="navbar-item" href="items.html?category=kitchen">Kitchen Goods</a>
+        <a class="navbar-item" href="items.html?category=electronics">Electronics</a>
+      </nav>
+    </div>
+    <main>
+      <table id="cart-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example row, repeat for each cart item -->
+          <tr>
+            <td>
+              <article class="item-container">
+                <a class="item" href="one-item.html">
+                  <img src="img/background.png" alt="the item">
+                  <div class="item-detail">
+                    <h3 class="item-name">item name</h3>
+                    <p class="item-price">$price</p>
+                  </div>
+                </a>
+              </article>
+            </td>
+            <td>$10.00</td>
+            <td>
+              <input type="number" value="1" min="1" class="quantity-input"
+                onchange="updateQuantity(this, 10)">
+              </td>
+            <td>$10.00</td>
+            <td><button onclick="removeItem(this)">Remove</button></td>
+          </tr>
+          <tr>
+            <td>
+              <article class="item-container">
+                <a class="item" href="one-item.html">
+                  <img src="img/background.png" alt="the item">
+                  <div class="item-detail">
+                    <h3 class="item-name">item name</h3>
+                    <p class="item-price">$price</p>
+                  </div>
+                </a>
+              </article>
+            </td>
+            <td>$10.00</td>
+            <td>
+              <input type="number" value="1" min="1" class="quantity-input"
+                onchange="updateQuantity(this, 10)">
+              </td>
+            <td>$10.00</td>
+            <td><button onclick="removeItem(this)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="checkout">
+        <p>Total: <span id="total-price">$10.00</span></p>
+        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+      </div>
+    </main>
+    <footer>
+      <p>
+        © 2024 Verzla ehf. Allur réttur áskilinn.
+      </p>
+    </footer>
+    <script src="index.js"></script>
+  </body>
+</html>
