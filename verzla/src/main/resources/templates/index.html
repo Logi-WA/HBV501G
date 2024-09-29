@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head th:replace="~{fragments/head :: head}"></head>
-  <body th:replace="~{fragments/body :: body}"></body>
-
-  <!-- <div th:replace="~{fragments/item :: item}"></div> -->
+  <body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div th:replace="~{fragments/header :: header}"></div>
+    
+    <div th:replace="~{fragments/mainc :: mainc}"></div>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- <div th:replace="~{fragments/body :: body}"></div> -->
+    <!-- Bootstrap core JS-->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core theme JS-->
+    <script th:src="@{/js/scripts.js}"></script>
+  </body>
 </html>
