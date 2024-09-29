@@ -15449,109 +15449,109 @@ body {
 
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-Thin.otf');
+  src: url('/fonts/metropolis/Metropolis-Thin.otf');
   font-weight: 100;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-ThinItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-ThinItalic.otf');
   font-weight: 100;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-ExtraLight.otf');
+  src: url('/fonts/metropolis/Metropolis-ExtraLight.otf');
   font-weight: 200;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-ExtraLightItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-ExtraLightItalic.otf');
   font-weight: 200;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-Light.otf');
+  src: url('/fonts/metropolis/Metropolis-Light.otf');
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-LightItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-LightItalic.otf');
   font-weight: 300;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-Regular.otf');
+  src: url('/fonts/metropolis/Metropolis-Regular.otf');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-RegularItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-RegularItalic.otf');
   font-weight: 400;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-Medium.otf');
+  src: url('/fonts/metropolis/Metropolis-Medium.otf');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-MediumItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-MediumItalic.otf');
   font-weight: 500;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-SemiBold.otf');
+  src: url('/fonts/metropolis/Metropolis-SemiBold.otf');
   font-weight: 600;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-SemiBoldItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-SemiBoldItalic.otf');
   font-weight: 600;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-Bold.otf');
+  src: url('/fonts/metropolis/Metropolis-Bold.otf');
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-BoldItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-BoldItalic.otf');
   font-weight: 700;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-ExtraBold.otf');
+  src: url('/fonts/metropolis/Metropolis-ExtraBold.otf');
   font-weight: 800;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-ExtraBoldItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-ExtraBoldItalic.otf');
   font-weight: 800;
   font-style: italic;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-Black.otf');
+  src: url('/fonts/metropolis/Metropolis-Black.otf');
   font-weight: 800;
   font-style: normal;
 }
 @font-face {
   font-family: 'Metropolis';
-  src: url('/assets/fonts/metropolis/Metropolis-BlackItalic.otf');
+  src: url('/fonts/metropolis/Metropolis-BlackItalic.otf');
   font-weight: 800;
   font-style: italic;
 }
@@ -17709,11 +17709,11 @@ body {
 }
 
 .card-waves .card-body {
-  background-image: url('/assets/img/backgrounds/bg-waves.svg');
+  background-image: url('/img/backgrounds/bg-waves.svg');
 }
 
 .card-angles .card-body {
-  background-image: url('/assets/img/backgrounds/bg-angles.svg');
+  background-image: url('/img/backgrounds/bg-angles.svg');
 }
 
 .card-flag {
@@ -19199,7 +19199,7 @@ section {
 
 .device[data-device='iPhoneX'][data-orientation='portrait'][data-color='black'] {
   padding-bottom: 198.89807163%;
-  background-image: url('/assets/img/device-mockups/iPhoneX/portrait.png');
+  background-image: url('/img/device-mockups/iPhoneX/portrait.png');
   z-index: initial;
 }
 
@@ -19215,7 +19215,7 @@ section {
 
 .device[data-device='iPhoneX'][data-orientation='landscape'][data-color='black'] {
   padding-bottom: 50.27700831%;
-  background-image: url('/assets/img/device-mockups/iPhoneX/landscape.png');
+  background-image: url('/img/device-mockups/iPhoneX/landscape.png');
   z-index: initial;
 }
 
@@ -19243,7 +19243,7 @@ section {
 
 .device[data-device='iPhoneX'][data-orientation='portrait'][data-color='black']::after {
   content: '';
-  background-image: url('/assets/img/device-mockups/iPhoneX/portrait_black.png');
+  background-image: url('/img/device-mockups/iPhoneX/portrait_black.png');
 }
 
 .device[data-device='iPhoneX'][data-orientation='portrait'][data-color='black']
@@ -19269,7 +19269,7 @@ section {
 
 .device[data-device='iPhoneX'][data-orientation='landscape'][data-color='black']::after {
   content: '';
-  background-image: url('/assets/img/device-mockups/iPhoneX/landscape_black.png');
+  background-image: url('/img/device-mockups/iPhoneX/landscape_black.png');
 }
 
 .device[data-device='iPhoneX'][data-orientation='landscape'][data-color='black']
@@ -19413,5 +19413,129 @@ section {
 @media (min-width: 992px) {
   .divider-right {
     border-right: 0.0625rem solid #e0e5ec;
+  }
+}
+
+#mainNav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #212529;
+}
+#mainNav .navbar-toggler {
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  text-transform: uppercase;
+  font-weight: 700;
+}
+#mainNav .navbar-brand {
+  color: #ffc800;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-weight: 700;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+}
+#mainNav .navbar-brand img {
+  height: 1.5rem;
+}
+#mainNav .navbar-nav .nav-item .nav-link {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 0.95rem;
+  color: #fff;
+  letter-spacing: 0.0625em;
+}
+#mainNav .navbar-nav .nav-item .nav-link.active,
+#mainNav .navbar-nav .nav-item .nav-link:hover {
+  color: #ffc800;
+}
+
+@media (min-width: 992px) {
+  #mainNav {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border: none;
+    background-color: transparent;
+    transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+  }
+  #mainNav .navbar-brand {
+    font-size: 1.5em;
+    transition: font-size 0.3s ease-in-out;
+  }
+  #mainNav .navbar-brand img {
+    height: 2rem;
+    transition: height 0.3s ease-in-out;
+  }
+  #mainNav.navbar-shrink {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-brand {
+    font-size: 1.25em;
+  }
+  #mainNav.navbar-shrink .navbar-brand svg,
+  #mainNav.navbar-shrink .navbar-brand img {
+    height: 1.5rem;
+  }
+  #mainNav .navbar-nav .nav-item {
+    margin-right: 1rem;
+  }
+  #mainNav .navbar-nav .nav-item:last-child {
+    margin-right: 0;
+  }
+}
+
+header.masthead {
+  padding-top: 10.5rem;
+  padding-bottom: 6rem;
+  text-align: center;
+  color: #fff;
+  background-image: url('/img/header-bg.jpg');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+}
+header.masthead .masthead-subheading {
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.5rem;
+  margin-bottom: 25px;
+  font-family: 'Roboto Slab', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+header.masthead .masthead-heading {
+  font-size: 3.25rem;
+  font-weight: 700;
+  line-height: 3.25rem;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@media (min-width: 768px) {
+  header.masthead {
+    padding-top: 17rem;
+    padding-bottom: 12.5rem;
+  }
+  header.masthead .masthead-subheading {
+    font-size: 2.25rem;
+    font-style: italic;
+    line-height: 2.25rem;
+    margin-bottom: 2rem;
+  }
+  header.masthead .masthead-heading {
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 4.5rem;
+    margin-bottom: 4rem;
   }
 }
