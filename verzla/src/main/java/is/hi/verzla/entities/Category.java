@@ -22,15 +22,20 @@ public class Category {
   @ManyToMany(mappedBy = "categories")
   private Set<Product> products = new HashSet<>();
 
+  // Default constructor for JPA
+  public Category() {
+  }
+
   public Category(String name) {
     this.name = name;
   }
 
-  private Long getId() {
+  // Make these methods public
+  public Long getId() {
     return id;
   }
 
-  private void setId(Long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
