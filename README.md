@@ -18,9 +18,10 @@
 9. `GET /api/orders/{id}` *(2)*
 10. `GET /api/products` *(1)*
 11. `GET /api/products/{id}` *(1)*
-12. `DELETE /api/wishlist`
-13. `GET /api/wishlist`
-14. `POST /api/wishlist`
+12. `DELETE /api/wishlist` *(2)*
+13. `GET /api/wishlist` *(2)*
+14. `POST /api/wishlist` *(2)*
+15. `PATCH /api/users/{id}/password` *(2)*
 
 ## Examples
 
