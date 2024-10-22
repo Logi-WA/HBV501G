@@ -32,7 +32,7 @@ function updateNavbarLoggedIn(userData) {
   const navbar = document.getElementById('navbarSupportedContent');
 
   const dropdownHtml = `
-        <div class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+        <div class="nav-item dropdown no-caret dropdown-user">
         <a
           class="btn btn-icon btn-transparent-dark dropdown-toggle"
           id="navbarDropdownUserImage"
@@ -90,15 +90,14 @@ function updateNavbarLoggedOut() {
 
   const loginButtonHtml = `
         <a
-        class="btn fw-500 ms-lg-4 lift btn-indigo"
+        class="btn fw-500 lift rounded-4 btn-dark"
         htype="button"
         data-bs-toggle="modal"
         data-bs-target="#auth-login"
         href=""
         id="loginButton"
       >
-        Log in
-        <i class="ms-2" data-feather="user"></i>
+        <i class="fas fa-user"></i>
       </a>
   `;
 
