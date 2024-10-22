@@ -22,7 +22,6 @@ public class Product {
   private String name;
 
   private double price;  // New field: price of the product
-  private int quantity;  // New field: available quantity
   private String imageUrl;  // New field: URL to the product image
   private String description;  // New field: brief description of the product
 
@@ -56,14 +55,6 @@ public class Product {
 
   public void setPrice(double price) {
     this.price = price;
-  }
-
-  public int getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
   }
 
   public String getImageUrl() {
