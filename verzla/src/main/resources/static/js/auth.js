@@ -90,7 +90,7 @@ function updateNavbarLoggedOut() {
 
   const loginButtonHtml = `
         <a
-        class="btn fw-500 lift rounded-4 btn-dark"
+        class="btn fw-500 lift rounded-4 btn-light text-dark"
         htype="button"
         data-bs-toggle="modal"
         data-bs-target="#auth-login"

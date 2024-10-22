@@ -1,10 +1,10 @@
 <!-- Navbar-->
 <nav
-  class="navbar navbar-marketing navbar-expand-lg bg-transparent navbar-dark fixed-top"
-  th:fragment="nav"
+  class="navbar navbar-marketing navbar-expand-lg bg-dark navbar-dark"
+  th:fragment="pageNav"
 >
   <div class="container px-5">
-    <a class="navbar-brand text-white" href="#page-top"
+    <a class="navbar-brand text-white" href="/"
       ><img th:src="@{/img/verzla.svg}" alt="VERZLA" style="height: 2rem"
     /></a>
     <button
@@ -21,13 +21,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto me-lg-5">
         <li class="nav-item">
-          <a class="nav-link" href="#page-top">Home</a>
+          <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#items">Items</a>
+          <a class="nav-link" href="/#items">Items</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#categories">Categories</a>
+          <a class="nav-link" href="/#categories">Categories</a>
         </li>
       </ul>
       <a
