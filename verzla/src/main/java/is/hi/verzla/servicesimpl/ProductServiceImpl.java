@@ -25,7 +25,11 @@ public class ProductServiceImpl implements ProductService {
   public Product getProductById(Long id) {
     return productRepository
       .findById(id)
-      .orElseThrow(() -> new RuntimeException("Product not found with id " + id)
-      );
+      .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+  }
+
+  @Override
+  public Product createProduct(Product product) {
+    return productRepository.save(product);  // Save new product with all its attributes
   }
 }

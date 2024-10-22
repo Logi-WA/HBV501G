@@ -21,6 +21,11 @@ public class Product {
   @NotEmpty(message = "Product name cannot be empty")
   private String name;
 
+  private double price;  // New field: price of the product
+  private int quantity;  // New field: available quantity
+  private String imageUrl;  // New field: URL to the product image
+  private String description;  // New field: brief description of the product
+
   @ManyToMany
   @JoinTable(
     name = "product_categories",
@@ -43,6 +48,38 @@ public class Product {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public Set<Category> getCategories() {

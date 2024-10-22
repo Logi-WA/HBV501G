@@ -4,6 +4,7 @@ import is.hi.verzla.entities.Product;
 import java.util.List;
 
 public interface ProductService {
-  List<Product> getProducts(String category);
-  Product getProductById(Long id);
+    List<Product> getProducts(String category);
+    Product getProductById(Long id);
+    Product createProduct(Product product);  // New method to handle product creation
 }
