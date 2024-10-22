@@ -17,8 +17,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "carts")
-public class Cart {
+@Table(name = "wishlists")
+public class Wishlist {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class Cart {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL)
   @JsonIgnore
-  private List<CartItem> cartItems = new ArrayList<>();
+  private List<WishlistItem> wishlistItems = new ArrayList<>();
 
-  public Cart() {
+  public Wishlist() {
   }
 
   public Long getId() {
@@ -44,14 +44,6 @@ public class Cart {
     this.id = id;
   }
 
-  public List<CartItem> getCartItems() {
-    return cartItems;
-  }
-
-  public void setCartItems(List<CartItem> cartItems) {
-    this.cartItems = cartItems;
-  }
-
   public User getUser() {
     return user;
   }
@@ -59,4 +51,13 @@ public class Cart {
   public void setUser(User user) {
     this.user = user;
   }
+
+  public List<WishlistItem> getWishlistItems() {
+    return wishlistItems;
+  }
+
+  public void setWishlistItems(List<WishlistItem> wishlistItems) {
+    this.wishlistItems = wishlistItems;
+  }
+
 }

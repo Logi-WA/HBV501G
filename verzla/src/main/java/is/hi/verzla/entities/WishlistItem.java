@@ -17,17 +17,18 @@ public class WishlistItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
-
-  @NotNull
+  @NotNull(message = "Product cannot be null")
   @ManyToOne
   @JoinColumn(name = "product_id")
   private Product product;
 
-  public WishlistItem() {}
+  @NotNull(message = "Wishlist cannot be null")
+  @ManyToOne
+  @JoinColumn(name = "wishlist_id")
+  private Wishlist wishlist;
+
+  public WishlistItem() {
+  }
 
   public Long getId() {
     return id;
@@ -37,19 +38,19 @@ public class WishlistItem {
     this.id = id;
   }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
   public Product getProduct() {
     return product;
   }
 
   public void setProduct(Product product) {
     this.product = product;
+  }
+
+  public Wishlist getWishlist() {
+    return wishlist;
+  }
+
+  public void setWishlist(Wishlist wishlist) {
+    this.wishlist = wishlist;
   }
 }

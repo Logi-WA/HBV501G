@@ -7,11 +7,20 @@
 
 ## Assignment 3
 
-1. `GET /api/users` (1)
-2. `POST /api/users` (2)
-3. `DELETE /api/users/{id}` (2)
-4. `GET /api/users/{id}` (1)
-5. `PATCH /api/users/{id}` (2)  
+1. `GET /api/users` *(1)*
+2. `POST /api/users` *(2)*
+3. `DELETE /api/users/{id}` *(2)*
+4. `GET /api/users/{id}` *(1)*
+5. `PATCH /api/users/{id}` *(2)*
+6. `GET /api/cart` *(1)*
+7. `POST /api/cart` *(2)*
+8. `PATCH /api/cart/{id}` *(3)*
+9. `GET /api/orders/{id}` *(2)*
+10. `GET /api/products` *(1)*
+11. `GET /api/products/{id}` *(1)*
+12. `DELETE /api/wishlist`
+13. `GET /api/wishlist`
+14. `POST /api/wishlist`
 
 ## Examples
 
