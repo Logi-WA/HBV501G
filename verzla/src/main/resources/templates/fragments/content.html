@@ -1,6 +1,6 @@
 <section class="bg-white py-10" id="browse" th:fragment="content">
   <div class="container px-5">
-    <h2 class="mb-4">Popular items</h2>
+    <h2 id="items" class="mb-4">Popular items</h2>
     <div class="row gx-5">
       <!-- Dynamically render products from the backend -->
       <div class="col-xl-3 col-lg-4 col-md-6 mb-5" th:each="product : ${products}">
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <h2 class="mb-4">Categories</h2>
+    <h2 id="categories" class="mb-4">Categories</h2>
     <div class="row gx-5">
       <!-- Dynamically render categories from the backend -->
       <div class="col-lg-4 col-md-6 mb-5" th:each="category : ${categories}">

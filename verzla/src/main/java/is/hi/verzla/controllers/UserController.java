@@ -3,6 +3,8 @@ package is.hi.verzla.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import is.hi.verzla.entities.User;
 import is.hi.verzla.services.UserService;
-import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/users")
@@ -63,13 +65,16 @@ public class UserController {
     return "User deleted with id " + id;
   }
 
-  // Initialize with sample data
-  @PostConstruct
-  public void initDatabase() {
-    if (userService.getAllUsers().isEmpty()) {
-      userService.createUser(
-          new User("Alice", "alice@example.com", "password1"));
-      userService.createUser(new User("Bob", "bob@example.com", "password2"));
+  @GetMapping("/me")
+  public ResponseEntity<?> getCurrentUser(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId != null) {
+      User user = userService.getUserById(userId);
+      if (user != null) {
+        // Return user entity
+        return ResponseEntity.ok(user);
+      }
     }
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
   }
 }
