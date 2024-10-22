@@ -55,7 +55,7 @@ function updateNavbarLoggedIn(userData) {
             </div>
           </h6>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#!">
+          <a class="dropdown-item" href="/account">
             <div class="dropdown-item-icon">
               <i data-feather="settings"></i>
             </div>

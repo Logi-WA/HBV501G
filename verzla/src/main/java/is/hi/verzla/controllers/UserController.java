@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -76,5 +77,20 @@ public class UserController {
       }
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+  }
+
+  @GetMapping("/account")
+  public String accountPage(HttpSession session, Model model) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      // User is not logged in; redirect to login page
+      return "redirect:/";
+    }
+
+    // Pass user information to the view
+    String userName = (String) session.getAttribute("userName");
+    model.addAttribute("userName", userName);
+
+    return "account";
   }
 }

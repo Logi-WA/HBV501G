@@ -3,6 +3,7 @@ package is.hi.verzla.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -54,5 +55,20 @@ public class CartController {
     Long userId = (Long) session.getAttribute("userId");
     cartService.removeProductFromCart(userId, productId);
     return "Product removed from cart";
+  }
+
+  @GetMapping("/cart")
+  public String viewCart(HttpSession session, Model model) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      // User is not logged in; redirect to home page or login page
+      return "redirect:/";
+    }
+
+    // Fetch cart items for the user
+    List<CartItem> cartItems = cartService.getCartItemsByUserId(userId);
+    model.addAttribute("cartItems", cartItems);
+
+    return "cart";
   }
 }

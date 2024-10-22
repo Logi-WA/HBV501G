@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
   <head th:replace="~{fragments/head :: head}"></head>
+    <title>Account - Verzla</title>
+  </head>
   <body id="page-top" class="bg-dark">
     <div id="layoutDefault">
       <div id="layoutDefault_content">
         <main>
           <div th:replace="~{fragments/nav :: nav}"></div>
-          <div th:replace="~{fragments/header :: header}"></div>
           <div th:replace="~{fragments/auth-login :: auth-login}"></div>
           <div th:replace="~{fragments/auth-register :: auth-register}"></div>
           <div th:replace="~{fragments/auth-password :: auth-password}"></div>
+          
+          <div th:replace="~{fragments/account-settings :: account-settings}"></div>
 
-          <div th:replace="~{fragments/content :: content}"></div>
         </main>
       </div>
       <div id="layoutDefault_footer">
@@ -26,5 +28,5 @@
     <!-- Core theme JS-->
     <script th:src="@{/js/scripts.js}"></script>
     <script th:src="@{/js/auth.js}"></script>
-  </body>
+  </body>  
 </html>
