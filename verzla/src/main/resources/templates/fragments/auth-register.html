@@ -18,55 +18,39 @@
           <form>
             <!-- Form Row-->
             <div class="row gx-3">
-              <div class="col-md-6">
+              <div class="col-12">
                 <!-- Form Group (first name)-->
                 <div class="mb-3">
-                  <label class="small mb-1" for="inputFirstName"
-                    >First Name</label
-                  >
+                  <label class="small mb-1" for="registerName">Name</label>
                   <input
                     class="form-control"
-                    id="inputFirstName"
+                    id="registerName"
                     type="text"
-                    placeholder="Enter first name"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <!-- Form Group (last name)-->
-                <div class="mb-3">
-                  <label class="small mb-1" for="inputLastName"
-                    >Last Name</label
-                  >
-                  <input
-                    class="form-control"
-                    id="inputLastName"
-                    type="text"
-                    placeholder="Enter last name"
+                    placeholder="Enter your name"
                   />
                 </div>
               </div>
             </div>
-            <!-- Form Group (email address)            -->
+            <!-- Form Group (email address) -->
             <div class="mb-3">
-              <label class="small mb-1" for="inputEmailAddress">Email</label>
+              <label class="small mb-1" for="registerEmail">Email</label>
               <input
                 class="form-control"
-                id="inputEmailAddress"
+                id="registerEmail"
                 type="email"
                 aria-describedby="emailHelp"
                 placeholder="Enter email address"
               />
             </div>
-            <!-- Form Row    -->
+            <!-- Form Row -->
             <div class="row gx-3">
               <div class="col-md-6">
                 <!-- Form Group (password)-->
                 <div class="mb-3">
-                  <label class="small mb-1" for="inputPassword">Password</label>
+                  <label class="small mb-1" for="registerPassword">Password</label>
                   <input
                     class="form-control"
-                    id="inputPassword"
+                    id="registerPassword"
                     type="password"
                     placeholder="Enter password"
                   />
@@ -75,12 +59,12 @@
               <div class="col-md-6">
                 <!-- Form Group (confirm password)-->
                 <div class="mb-3">
-                  <label class="small mb-1" for="inputConfirmPassword"
+                  <label class="small mb-1" for="registerConfirmPassword"
                     >Confirm Password</label
                   >
                   <input
                     class="form-control"
-                    id="inputConfirmPassword"
+                    id="registerConfirmPassword"
                     type="password"
                     placeholder="Confirm password"
                   />
@@ -91,8 +75,8 @@
             <a
               class="btn btn-primary btn-block"
               type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#auth-login"
+              href="#"
+              onclick="registerUser()"
               >Create Account</a
             >
           </form>

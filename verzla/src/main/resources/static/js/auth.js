@@ -176,3 +176,62 @@ async function logout() {
     console.error('Error during logout:', error);
   }
 }
+
+async function registerUser() {
+  const name = document.getElementById('registerName').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  const password = document.getElementById('registerPassword').value;
+  const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+  // Client-side validation
+  if (!name || !email || !password || !confirmPassword) {
+    alert('Please fill all fields.');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert('Passwords do not match.');
+    return;
+  }
+
+  const user = {
+    name: name,
+    email: email,
+    password: password,
+  }
+
+  try {
+    const response = await fetch('/api/users', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (response.ok) {
+      // Registration successful
+      alert('Registration successful. You can now log in.');
+      // Dismiss the modal
+      const registerModalElement = document.getElementById("auth-register");
+      const modalInstance = bootstrap.Modal.getInstance(registerModalElement);
+
+      if (modalInstance) {
+        modalInstance.hide();
+      } else {
+        // If modal instance is not found, initialize it
+        const newModalInstance = new bootstrap.Modal(registerModalElement);
+        newModalInstance.hide();
+      }
+      // Optionally, open the login modal
+      const loginModalElement = document.getElementById("auth-login");
+      const loginModalInstance = new bootstrap.Modal(loginModalElement);
+      loginModalInstance.show();
+    } else {
+      const errorText = await response.text();
+      alert("Registration failed: " + errorText);
+    }
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+}

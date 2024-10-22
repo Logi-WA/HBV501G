@@ -1,7 +1,10 @@
 package is.hi.verzla.controllers;
 
+import is.hi.verzla.entities.User;
+import is.hi.verzla.services.UserService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import is.hi.verzla.entities.User;
-import is.hi.verzla.services.UserService;
-import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/users")
@@ -40,8 +39,22 @@ public class UserController {
 
   // Create user
   @PostMapping
-  public User createUser(@RequestBody User user) {
-    return userService.createUser(user);
+  public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+    // Check if email is already in use
+    if (userService.getUserByEmail(user.getEmail()) != null) {
+      return ResponseEntity
+        .status(HttpStatus.CONFLICT)
+        .body("Email already in use");
+    }
+
+    try {
+      User newUser = userService.createUser(user);
+      return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    } catch (Exception e) {
+      return ResponseEntity
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error creating user");
+    }
   }
 
   // Patch a user
@@ -53,8 +66,9 @@ public class UserController {
   // Update password
   @PatchMapping("/{id}/password")
   public String updatePassword(
-      @PathVariable Long id,
-      @RequestBody String newPassword) {
+    @PathVariable Long id,
+    @RequestBody String newPassword
+  ) {
     userService.updatePassword(id, newPassword);
     return "Password updated successfully";
   }
@@ -76,7 +90,9 @@ public class UserController {
         return ResponseEntity.ok(user);
       }
     }
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+    return ResponseEntity
+      .status(HttpStatus.UNAUTHORIZED)
+      .body("User not logged in");
   }
 
   @GetMapping("/account")

@@ -10,4 +10,5 @@ public interface UserService {
   User updateUser(Long id, User userDetails);
   void deleteUser(Long id);
   User updatePassword(Long id, String newPassword);
+  User getUserByEmail(String email);
 }
