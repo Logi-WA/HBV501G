@@ -3,9 +3,15 @@
     <h2 id="items" class="mb-4">Popular items</h2>
     <div class="row gx-5">
       <!-- Dynamically render products from the backend -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-5" th:each="product : ${products}">
-        <a class="card lift h-100" href="#!">
-          <div class="card-flag card-flag-dark card-flag-top-right card-flag-lg" th:text="'$' + ${product.price}">
+      <div
+        class="col-xl-3 col-lg-4 col-md-6 mb-5"
+        th:each="product : ${products}"
+      >
+        <div class="card h-100">
+          <div
+            class="card-flag card-flag-dark card-flag-top-right card-flag-lg"
+            th:text="'$' + ${product.price}"
+          >
             <!-- Product Price -->
           </div>
           <img
@@ -14,14 +20,29 @@
             alt="Product Image"
           />
           <div class="card-body p-3">
-            <div class="card-title small mb-0" th:text="${product.name}">
-              <!-- Product Name -->
-            </div>
-            <div class="text-xs text-gray-500" th:text="${product.categories.isEmpty() ? 'Uncategorized' : product.categories.iterator().next().name}">
-              <!-- Display the first category, or 'Uncategorized' if none -->
+            <div class="d-flex justify-content-between align-items-center">
+              <a class="link" href="#!">
+                <div class="card-title small mb-0" th:text="${product.name}">
+                  <!-- Product Name -->
+                </div>
+                <div
+                  class="text-xs text-gray-500"
+                  th:text="${product.categories.isEmpty() ? 'Uncategorized' : product.categories.iterator().next().name}"
+                >
+                  <!-- Display the first category, or 'Uncategorized' if none -->
+                </div>
+              </a>
+              <div class="d-flex">
+                <a htype="button" href="#" id="addToWish" class="btn btn-sm btn-dark rounded-4 lift-sm me-1 fs-5">
+                  <i class="fas fa-heart-circle-plus"></i>
+                </a>
+                <a htype="button" href="#" id="addToCart" class="btn btn-sm btn-dark rounded-4 lift-sm fs-5">
+                  <i class="fas fa-cart-plus"></i>
+                </a>
+              </div>
             </div>
           </div>
-        </a>
+        </div>
       </div>
     </div>
 
@@ -29,10 +50,14 @@
     <div class="row gx-5">
       <!-- Dynamically render categories from the backend -->
       <div class="col-lg-4 col-md-6 mb-5" th:each="category : ${categories}">
-        <a class="card lift border-top-0 border-start-0 border-end-0 border-bottom-lg border-red" href="#!">
+        <a
+          class="card lift border-top-0 border-start-0 border-end-0 border-bottom-lg border-red"
+          href="#!"
+        >
           <div class="card-body text-center">
             <div class="icon-stack icon-stack-xl bg-red text-white mb-2">
-              <i class="fas fa-box"></i> <!-- Customize icons as needed -->
+              <i class="fas fa-box"></i>
+              <!-- Customize icons as needed -->
             </div>
             <div class="small text-gray-600" th:text="${category.name}">
               <!-- Category Name -->
