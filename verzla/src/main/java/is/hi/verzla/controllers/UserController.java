@@ -2,7 +2,6 @@ package is.hi.verzla.controllers;
 
 import is.hi.verzla.entities.User;
 import is.hi.verzla.services.UserService;
-import jakarta.annotation.PostConstruct;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,16 +59,5 @@ public class UserController {
   public String deleteUser(@PathVariable Long id) {
     userService.deleteUser(id);
     return "User deleted with id " + id;
-  }
-
-  // Initialize with sample data
-  @PostConstruct
-  public void initDatabase() {
-    if (userService.getAllUsers().isEmpty()) {
-      userService.createUser(
-        new User("Alice", "alice@example.com", "password1")
-      );
-      userService.createUser(new User("Bob", "bob@example.com", "password2"));
-    }
   }
 }
