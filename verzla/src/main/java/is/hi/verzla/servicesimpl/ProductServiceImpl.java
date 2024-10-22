@@ -3,7 +3,6 @@ package is.hi.verzla.servicesimpl;
 import is.hi.verzla.entities.Product;
 import is.hi.verzla.repositories.ProductRepository;
 import is.hi.verzla.services.ProductService;
-import jakarta.annotation.PostConstruct;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
