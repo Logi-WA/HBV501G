@@ -1,9 +1,9 @@
 package is.hi.verzla.services;
 
-import java.util.List;
 import is.hi.verzla.entities.Product;
+import java.util.List;
 
 public interface ProductService {
-    List<Product> getProducts(String category);
-    Product getProductById(Long id);
+  List<Product> getProducts(String category);
+  Product getProductById(Long id);
 }

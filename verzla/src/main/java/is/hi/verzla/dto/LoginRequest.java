@@ -1,6 +1,7 @@
 package is.hi.verzla.dto;
 
 public class LoginRequest {
+
   private String username;
   private String password;
 
@@ -20,5 +21,4 @@ public class LoginRequest {
   public void setPassword(String password) {
     this.password = password;
   }
-  
 }

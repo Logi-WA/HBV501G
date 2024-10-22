@@ -17,8 +17,8 @@
 
 ### Assignment 2 Examples
 
-1. `cool code`
-2. `cool code 2`
+1. `curl -X POST localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\": \"user\", \"password\": \"password\"}"`
+2. `curl localhost:8080/api/categories`
 
 ### Assignment 3 Examples
 
