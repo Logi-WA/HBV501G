@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+  <div th:replace="~{fragments/nav :: nav}"></div>
+  <div class="container py-5">
+    <h2>Your Shopping Cart</h2>
+    <div th:if="${cartItems.isEmpty()}">
+      <p>Your cart is empty.</p>
+    </div>
+    <div class="row" th:each="item : ${cartItems}">
+      <div class="col-md-3 mb-3">
+        <div class="card">
+          <img th:src="@{${item.product.imageUrl}}" class="card-img-top" alt="Product Image">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${item.product.name}"></h5>
+            <p class="card-text" th:text="'$' + ${item.product.price}"></p>
+            <p class="card-text" th:text="'Quantity: ' + ${item.quantity}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

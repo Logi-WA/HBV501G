@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.verzla.controllers.CartController.ProductRequest;
 import is.hi.verzla.entities.WishlistItem;
 import is.hi.verzla.services.WishlistService;
 import jakarta.servlet.http.HttpSession;
@@ -31,11 +32,16 @@ public class WishlistController {
 
   // Add product to the wishlist
   @PostMapping
-  public String addToWishlist(@RequestBody Long productId, HttpSession session) {
+  public String addToWishlist(@RequestBody ProductRequest productRequest, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return "User must be logged in to add items to wishlist";
+    }
+    Long productId = productRequest.getProductId();
     wishlistService.addProductToWishlist(userId, productId);
     return "Product added to wishlist";
   }
+
 
   // Remove product from the wishlist
   @DeleteMapping
@@ -60,5 +66,16 @@ public class WishlistController {
     model.addAttribute("wishlistItems", wishlistItems);
 
     return "wishlist";
+  }
+  public static class ProductRequest {
+    private Long productId;
+
+    public Long getProductId() {
+      return productId;
+    }
+
+    public void setProductId(Long productId) {
+      this.productId = productId;
+    }
   }
 }

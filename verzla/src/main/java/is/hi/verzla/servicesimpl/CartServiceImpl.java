@@ -39,25 +39,19 @@ public class CartServiceImpl implements CartService {
 
   @Override
   public void addProductToCart(Long userId, Long productId) {
-    Product product = productRepository
-        .findById(productId)
+    Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
 
     Cart cart = cartRepository.findByUser_Id(userId);
     if (cart == null) {
       cart = new Cart();
-      // Fetch the User entity
-      User user = userRepository
-          .findById(userId)
+      User user = userRepository.findById(userId)
           .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
       cart.setUser(user);
       cart = cartRepository.save(cart);
     }
 
-    CartItem existingCartItem = cartItemRepository.findByCartAndProduct(
-        cart,
-        product);
-
+    CartItem existingCartItem = cartItemRepository.findByCartAndProduct(cart, product);
     if (existingCartItem != null) {
       existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
       cartItemRepository.save(existingCartItem);
@@ -72,8 +66,7 @@ public class CartServiceImpl implements CartService {
 
   @Override
   public CartItem updateCartItemQuantity(Long cartItemId, int quantity) {
-    CartItem cartItem = cartItemRepository
-        .findById(cartItemId)
+    CartItem cartItem = cartItemRepository.findById(cartItemId)
         .orElseThrow(() -> new RuntimeException("Cart item not found with id " + cartItemId));
     cartItem.setQuantity(quantity);
     return cartItemRepository.save(cartItem);
@@ -81,12 +74,10 @@ public class CartServiceImpl implements CartService {
 
   @Override
   public void removeProductFromCart(Long userId, Long productId) {
-    User user = userRepository
-        .findById(userId)
+    User user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
 
-    Product product = productRepository
-        .findById(productId)
+    Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
 
     Cart cart = cartRepository.findByUser_Id(userId);

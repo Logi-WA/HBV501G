@@ -33,11 +33,16 @@ public class CartController {
 
   // Add item to the shopping cart
   @PostMapping
-  public String addToCart(@RequestBody Long productId, HttpSession session) {
+  public String addToCart(@RequestBody ProductRequest productRequest, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return "User must be logged in to add items to cart";
+    }
+    Long productId = productRequest.getProductId();
     cartService.addProductToCart(userId, productId);
     return "Product added to cart";
   }
+
 
   // Update quantity of an item in the cart
   @PatchMapping("/{id}")
@@ -70,5 +75,16 @@ public class CartController {
     model.addAttribute("cartItems", cartItems);
 
     return "cart";
+  }
+  public static class ProductRequest {
+    private Long productId;
+
+    public Long getProductId() {
+      return productId;
+    }
+
+    public void setProductId(Long productId) {
+      this.productId = productId;
+    }
   }
 }

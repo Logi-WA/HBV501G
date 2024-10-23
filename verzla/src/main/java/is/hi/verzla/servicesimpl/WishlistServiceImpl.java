@@ -39,16 +39,12 @@ public class WishlistServiceImpl implements WishlistService {
 
   @Override
   public void addProductToWishlist(Long userId, Long productId) {
-    Product product = productRepository
-        .findById(productId)
+    Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
 
-    // Fetch the User entity
-    User user = userRepository
-        .findById(userId)
+    User user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
 
-    // Get or create the wishlist
     Wishlist wishlist = wishlistRepository.findByUser_Id(userId);
     if (wishlist == null) {
       wishlist = new Wishlist();
@@ -56,24 +52,21 @@ public class WishlistServiceImpl implements WishlistService {
       wishlist = wishlistRepository.save(wishlist);
     }
 
-    // Check if the product is already in the wishlist
     WishlistItem existingItem = wishlistItemRepository.findByWishlistAndProduct(wishlist, product);
     if (existingItem == null) {
       WishlistItem newItem = new WishlistItem();
       newItem.setProduct(product);
-      newItem.setWishlist(wishlist); // Set the wishlist
+      newItem.setWishlist(wishlist);
       wishlistItemRepository.save(newItem);
     }
   }
 
   @Override
   public void removeProductFromWishlist(Long userId, Long productId) {
-    User user = userRepository
-        .findById(userId)
+    User user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
 
-    Product product = productRepository
-        .findById(productId)
+    Product product = productRepository.findById(productId)
         .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
 
     Wishlist wishlist = wishlistRepository.findByUser_Id(userId);

@@ -3,11 +3,8 @@
     <h2 id="items" class="mb-4">Popular items</h2>
     <div class="row gx-5">
       <!-- Dynamically render products from the backend -->
-      <div
-        class="col-xl-3 col-lg-4 col-md-6 mb-5"
-        th:each="product : ${products}"
-      >
-        <div class="card h-100">
+      <div class="col-xl-3 col-lg-4 col-md-6 mb-5" th:each="product : ${products}">
+        <div class="card h-100" data-product-id="[[${product.id}]]">
           <div
             class="card-flag card-flag-dark card-flag-top-right card-flag-lg"
             th:text="'$' + ${product.price}"
@@ -33,10 +30,10 @@
                 </div>
               </a>
               <div class="d-flex">
-                <a htype="button" href="#" id="addToWish" class="btn btn-sm btn-dark rounded-4 lift-sm me-1 fs-5">
+                <a htype="button" href="#" class="btn btn-sm btn-dark rounded-4 lift-sm me-1 fs-5 addToWish">
                   <i class="fas fa-heart-circle-plus"></i>
                 </a>
-                <a htype="button" href="#" id="addToCart" class="btn btn-sm btn-dark rounded-4 lift-sm fs-5">
+                <a htype="button" href="#" class="btn btn-sm btn-dark rounded-4 lift-sm fs-5 addToCart">
                   <i class="fas fa-cart-plus"></i>
                 </a>
               </div>
