@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for managing user-related operations.
+ */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -25,22 +28,35 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  // Get all users
+  /**
+   * Retrieves a list of all users.
+   *
+   * @return A list of all User entities.
+   */
   @GetMapping
   public List<User> getAllUsers() {
     return userService.getAllUsers();
   }
 
-  // Get user by id
+  /**
+   * Retrieves a user by their ID.
+   *
+   * @param id The ID of the user to retrieve.
+   * @return The User entity with the specified ID.
+   */
   @GetMapping("/{id}")
   public User getUserById(@PathVariable Long id) {
     return userService.getUserById(id);
   }
 
-  // Create user
+  /**
+   * Creates a new user.
+   *
+   * @param user The User entity to be created.
+   * @return A ResponseEntity indicating success or conflict if the email is already in use.
+   */
   @PostMapping
   public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
-    // Check if email is already in use
     if (userService.getUserByEmail(user.getEmail()) != null) {
       return ResponseEntity
         .status(HttpStatus.CONFLICT)
@@ -57,13 +73,25 @@ public class UserController {
     }
   }
 
-  // Patch a user
+  /**
+   * Updates a user's details using a patch request.
+   *
+   * @param id The ID of the user to update.
+   * @param userDetails The updated user details.
+   * @return The updated User entity.
+   */
   @PatchMapping("/{id}")
   public User patchUser(@PathVariable Long id, @RequestBody User userDetails) {
     return userService.updateUser(id, userDetails);
   }
 
-  // Update password
+  /**
+   * Updates the password of a user by their ID.
+   *
+   * @param id The ID of the user.
+   * @param newPassword The new password to set.
+   * @return A confirmation message.
+   */
   @PatchMapping("/{id}/password")
   public String updatePassword(
     @PathVariable Long id,
@@ -73,20 +101,30 @@ public class UserController {
     return "Password updated successfully";
   }
 
-  // Delete user
+  /**
+   * Deletes a user by their ID.
+   *
+   * @param id The ID of the user to delete.
+   * @return A confirmation message.
+   */
   @DeleteMapping("/{id}")
   public String deleteUser(@PathVariable Long id) {
     userService.deleteUser(id);
     return "User deleted with id " + id;
   }
 
+  /**
+   * Retrieves the currently logged-in user from the session.
+   *
+   * @param session The current HTTP session.
+   * @return The User entity if logged in, or an unauthorized response if not.
+   */
   @GetMapping("/me")
   public ResponseEntity<?> getCurrentUser(HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId != null) {
       User user = userService.getUserById(userId);
       if (user != null) {
-        // Return user entity
         return ResponseEntity.ok(user);
       }
     }
@@ -95,7 +133,13 @@ public class UserController {
       .body("User not logged in");
   }
 
-  // Update user details
+  /**
+   * Updates the details of the currently logged-in user.
+   *
+   * @param userDetails The updated user details.
+   * @param session The current HTTP session.
+   * @return The updated User entity or an unauthorized response if not logged in.
+   */
   @PatchMapping("/me")
   public ResponseEntity<?> updateCurrentUser(
     @RequestBody User userDetails,
@@ -110,7 +154,6 @@ public class UserController {
 
     try {
       User updatedUser = userService.updateUser(userId, userDetails);
-      // Update session attributes if necessary
       session.setAttribute("userName", updatedUser.getName());
       session.setAttribute("userEmail", updatedUser.getEmail());
       return ResponseEntity.ok(updatedUser);
@@ -121,7 +164,13 @@ public class UserController {
     }
   }
 
-  // Update password
+  /**
+   * Updates the password of the currently logged-in user.
+   *
+   * @param passwords A map containing the current and new passwords.
+   * @param session The current HTTP session.
+   * @return A confirmation message or an error response if the current password is incorrect or not logged in.
+   */
   @PatchMapping("/me/password")
   public ResponseEntity<?> updateCurrentUserPassword(
     @RequestBody Map<String, String> passwords,

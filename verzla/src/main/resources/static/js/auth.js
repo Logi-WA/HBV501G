@@ -1,7 +1,13 @@
+/**
+ * Event listener to check the user's authentication status on page load.
+ */
 document.addEventListener('DOMContentLoaded', () => {
   checkAuthenticationStatus();
 });
 
+/**
+ * Sends a request to check if the user is logged in and updates the navbar accordingly.
+ */
 async function checkAuthenticationStatus() {
   try {
     const response = await fetch('/api/users/me', {
@@ -22,6 +28,10 @@ async function checkAuthenticationStatus() {
   }
 }
 
+/**
+ * Updates the navbar to show the logged-in user's information.
+ * @param {Object} userData - The user data object containing name and email.
+ */
 function updateNavbarLoggedIn(userData) {
   const loginButton = document.getElementById('loginButton');
   if (loginButton) {
@@ -78,8 +88,11 @@ function updateNavbarLoggedIn(userData) {
   }
 }
 
+/**
+ * Updates the navbar to show the login button when the user is not logged in.
+ */
 function updateNavbarLoggedOut() {
-  // remove user dropdown if exists
+  // Remove user dropdown if it exists
   const userDropdown = document.querySelector('.dropdown-user');
   if (userDropdown) {
     userDropdown.remove();
@@ -108,6 +121,9 @@ function updateNavbarLoggedOut() {
   }
 }
 
+/**
+ * Sends a login request to the server with the provided email and password.
+ */
 async function login() {
   const email = document.getElementById('inputEmailAddress').value;
   const password = document.getElementById('inputPassword').value;
@@ -160,6 +176,9 @@ async function login() {
   }
 }
 
+/**
+ * Sends a logout request to the server and updates the navbar to show the logged-out state.
+ */
 async function logout() {
   try {
     const response = await fetch('/auth/logout', {
@@ -177,6 +196,10 @@ async function logout() {
   }
 }
 
+/**
+ * Sends a registration request to create a new user.
+ * Validates that all fields are filled and that the passwords match before sending the request.
+ */
 async function registerUser() {
   const name = document.getElementById('registerName').value.trim();
   const email = document.getElementById('registerEmail').value.trim();

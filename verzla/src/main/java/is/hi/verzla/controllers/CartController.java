@@ -25,6 +25,10 @@ public class CartController {
   private CartService cartService;
 
   // Get items in the shopping cart
+  /**
+   * @param session
+   * @return
+   */
   @GetMapping
   public List<CartItem> getCartItems(HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
@@ -32,6 +36,11 @@ public class CartController {
   }
 
   // Add item to the shopping cart
+  /**
+   * @param productRequest
+   * @param session
+   * @return
+   */
   @PostMapping
   public String addToCart(@RequestBody ProductRequest productRequest, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
@@ -45,6 +54,11 @@ public class CartController {
 
 
   // Update quantity of an item in the cart
+  /**
+   * @param id
+   * @param quantity
+   * @return
+   */
   @PatchMapping("/{id}")
   public CartItem updateCartItem(
       @PathVariable Long id,
@@ -53,6 +67,11 @@ public class CartController {
   }
 
   // Remove product from the cart
+  /**
+   * @param productId
+   * @param session
+   * @return
+   */
   @DeleteMapping
   public String removeFromCart(
       @RequestBody Long productId,
@@ -62,6 +81,11 @@ public class CartController {
     return "Product removed from cart";
   }
 
+  /**
+   * @param session
+   * @param model
+   * @return
+   */
   @GetMapping("/cart")
   public String viewCart(HttpSession session, Model model) {
     Long userId = (Long) session.getAttribute("userId");

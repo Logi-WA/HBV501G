@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for managing orders.
+ */
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
@@ -15,7 +18,12 @@ public class OrderController {
   @Autowired
   private OrderService orderService;
 
-  // Get order details by ID
+  /**
+   * Retrieves the details of an order by its ID.
+   *
+   * @param id The ID of the order to retrieve.
+   * @return The Order object with the specified ID.
+   */
   @GetMapping("/{id}")
   public Order getOrderDetails(@PathVariable Long id) {
     return orderService.getOrderById(id);

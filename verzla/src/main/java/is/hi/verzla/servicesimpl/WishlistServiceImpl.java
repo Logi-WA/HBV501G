@@ -16,6 +16,10 @@ import is.hi.verzla.repositories.WishlistItemRepository;
 import is.hi.verzla.repositories.WishlistRepository;
 import is.hi.verzla.services.WishlistService;
 
+/**
+ * Implementation of the {@link WishlistService} interface. Provides methods for managing wishlists,
+ * including adding, retrieving, and removing products from a user's wishlist.
+ */
 @Service
 public class WishlistServiceImpl implements WishlistService {
 
@@ -31,12 +35,25 @@ public class WishlistServiceImpl implements WishlistService {
   @Autowired
   private UserRepository userRepository;
 
+  /**
+   * Retrieves all wishlist items for a specific user.
+   *
+   * @param userId The ID of the user whose wishlist items are to be retrieved.
+   * @return A list of {@link WishlistItem} objects belonging to the user's wishlist.
+   */
   @Override
   public List<WishlistItem> getWishlistByUserId(Long userId) {
     Wishlist wishlist = wishlistRepository.findByUser_Id(userId);
     return wishlist != null ? wishlist.getWishlistItems() : new ArrayList<>();
   }
 
+  /**
+   * Adds a product to the user's wishlist.
+   *
+   * @param userId The ID of the user.
+   * @param productId The ID of the product to be added to the wishlist.
+   * @throws RuntimeException if the user or product cannot be found.
+   */
   @Override
   public void addProductToWishlist(Long userId, Long productId) {
     Product product = productRepository.findById(productId)
@@ -61,6 +78,13 @@ public class WishlistServiceImpl implements WishlistService {
     }
   }
 
+  /**
+   * Removes a product from the user's wishlist.
+   *
+   * @param userId The ID of the user.
+   * @param productId The ID of the product to be removed from the wishlist.
+   * @throws RuntimeException if the user or product cannot be found.
+   */
   @Override
   public void removeProductFromWishlist(Long userId, Long productId) {
     User user = userRepository.findById(userId)

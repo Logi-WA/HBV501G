@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for managing products.
+ */
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -19,7 +22,12 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  // Get all products, with optional filtering by category
+  /**
+   * Retrieves a list of all products, with optional filtering by category.
+   *
+   * @param category Optional category filter to retrieve products by specific category.
+   * @return A list of products, filtered by category if provided.
+   */
   @GetMapping
   public List<Product> getProducts(
     @RequestParam(required = false) String category
@@ -27,13 +35,23 @@ public class ProductController {
     return productService.getProducts(category);
   }
 
-  // Get product by id
+  /**
+   * Retrieves a specific product by its ID.
+   *
+   * @param id The ID of the product to retrieve.
+   * @return The Product object with the specified ID.
+   */
   @GetMapping("/{id}")
   public Product getProductById(@PathVariable Long id) {
     return productService.getProductById(id);
   }
 
-  // Create a new product
+  /**
+   * Creates a new product.
+   *
+   * @param product The Product object to be created.
+   * @return The created Product object.
+   */
   @PostMapping
   public Product createProduct(@RequestBody Product product) {
     return productService.createProduct(product);

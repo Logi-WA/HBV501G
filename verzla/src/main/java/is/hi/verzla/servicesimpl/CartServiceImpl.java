@@ -2,10 +2,8 @@ package is.hi.verzla.servicesimpl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import is.hi.verzla.entities.Cart;
 import is.hi.verzla.entities.CartItem;
 import is.hi.verzla.entities.Product;
@@ -16,6 +14,10 @@ import is.hi.verzla.repositories.ProductRepository;
 import is.hi.verzla.repositories.UserRepository;
 import is.hi.verzla.services.CartService;
 
+/**
+ * Implementation of the {@link CartService} interface. Provides methods for managing
+ * cart items, including adding, retrieving, and removing items from a user's shopping cart.
+ */
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -31,12 +33,24 @@ public class CartServiceImpl implements CartService {
   @Autowired
   private UserRepository userRepository;
 
+  /**
+   * Retrieves the list of items in a user's cart.
+   *
+   * @param userId The ID of the user whose cart items are to be retrieved.
+   * @return A list of {@link CartItem} objects in the user's cart.
+   */
   @Override
   public List<CartItem> getCartItemsByUserId(Long userId) {
     Cart cart = cartRepository.findByUser_Id(userId);
     return cart != null ? cart.getCartItems() : new ArrayList<>();
   }
 
+  /**
+   * Adds a product to a user's cart. If the product already exists in the cart, the quantity is incremented.
+   *
+   * @param userId The ID of the user.
+   * @param productId The ID of the product to be added to the cart.
+   */
   @Override
   public void addProductToCart(Long userId, Long productId) {
     Product product = productRepository.findById(productId)
@@ -64,6 +78,13 @@ public class CartServiceImpl implements CartService {
     }
   }
 
+  /**
+   * Updates the quantity of an existing item in the cart.
+   *
+   * @param cartItemId The ID of the cart item to be updated.
+   * @param quantity The new quantity of the item.
+   * @return The updated {@link CartItem}.
+   */
   @Override
   public CartItem updateCartItemQuantity(Long cartItemId, int quantity) {
     CartItem cartItem = cartItemRepository.findById(cartItemId)
@@ -72,6 +93,12 @@ public class CartServiceImpl implements CartService {
     return cartItemRepository.save(cartItem);
   }
 
+  /**
+   * Removes a product from a user's cart.
+   *
+   * @param userId The ID of the user.
+   * @param productId The ID of the product to be removed from the cart.
+   */
   @Override
   public void removeProductFromCart(Long userId, Long productId) {
     User user = userRepository.findById(userId)

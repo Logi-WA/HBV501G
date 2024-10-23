@@ -13,6 +13,9 @@ import is.hi.verzla.entities.User;
 import is.hi.verzla.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Controller for handling authentication-related actions such as login and logout.
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -20,6 +23,13 @@ public class AuthController {
   @Autowired
   private UserRepository userRepository;
 
+  /**
+   * Handles user login by verifying credentials and starting a session if successful.
+   *
+   * @param loginRequest The login request containing username (email) and password.
+   * @param session The HTTP session to store user information.
+   * @return ResponseEntity with success message if login is successful, or an error message if login fails.
+   */
   @PostMapping("/login")
   public ResponseEntity<?> login(
       @RequestBody LoginRequest loginRequest,
@@ -34,7 +44,7 @@ public class AuthController {
         session.setAttribute("userId", user.getId());
         session.setAttribute("userName", user.getName());
         session.setAttribute("userEmail", user.getEmail());
-        return ResponseEntity.ok("Login succesful, session started.");
+        return ResponseEntity.ok("Login successful, session started.");
       } else {
         // Passwords don't match
         return ResponseEntity
@@ -49,6 +59,12 @@ public class AuthController {
     }
   }
 
+  /**
+   * Handles user logout by invalidating the current session.
+   *
+   * @param session The HTTP session to be invalidated.
+   * @return ResponseEntity with success message indicating the logout was successful.
+   */
   @PostMapping("/logout")
   public ResponseEntity<?> logout(HttpSession session) {
     // Invalidate session

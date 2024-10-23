@@ -12,6 +12,9 @@ import is.hi.verzla.entities.Product;
 import is.hi.verzla.services.CategoryService;
 import is.hi.verzla.services.ProductService;
 
+/**
+ * Controller for managing content displayed on the homepage.
+ */
 @Controller
 public class ContentController {
 
@@ -21,6 +24,13 @@ public class ContentController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * Retrieves all products and categories to be displayed on the homepage.
+     * Adds them to the model for rendering on the frontend.
+     *
+     * @param model The model to which the list of products and categories will be added.
+     * @return The name of the template to be rendered for the homepage content.
+     */
     @GetMapping("/content")
     public String getHomePage(Model model) {
         List<Product> products = productService.getProducts(null); // Fetch all products

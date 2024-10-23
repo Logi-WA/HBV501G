@@ -8,10 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for handling category-related actions.
+ */
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
 
+  /**
+   * Retrieves a list of predefined product categories.
+   *
+   * @return ResponseEntity containing a list of Category objects.
+   */
   @GetMapping("/categories")
   public ResponseEntity<List<Category>> getCategories() {
     List<Category> categories = new ArrayList<>();

@@ -17,6 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Controller responsible for handling view-related actions such as displaying
+ * the home page, account page, shopping cart, and wishlist.
+ */
 @Controller
 public class ViewController {
 
@@ -35,74 +39,82 @@ public class ViewController {
   @Autowired
   private WishlistService wishlistService;
 
-  // =========================================
-  // Home Page
-  // =========================================
-  @GetMapping("/") // Main entry point for the application
+  /**
+   * Handles requests to the home page.
+   *
+   * @param model Model to pass data to the view.
+   * @return The name of the view for the home page ("index").
+   */
+  @GetMapping("/")
   public String index(Model model) {
-    // Fetch all products and categories
     List<Product> products = productService.getProducts(null);
     List<Category> categories = categoryService.getAllCategories();
 
-    // Add them to the model to be used in the template
     model.addAttribute("products", products);
     model.addAttribute("categories", categories);
-    return "index"; // Return index.html
+    return "index";
   }
 
-  // =========================================
-  // Account Management
-  // =========================================
+  /**
+   * Handles requests to the account management page.
+   *
+   * @param session The current HTTP session to verify user login.
+   * @param model Model to pass data to the view.
+   * @return The name of the view for the account page ("account") or redirects
+   *         to the home page if the user is not logged in.
+   */
   @GetMapping("/account")
   public String accountPage(HttpSession session, Model model) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
-      // User is not logged in; redirect to login page
       return "redirect:/";
     }
 
-    // Fetch the user from the database
     User user = userService.getUserById(userId);
     model.addAttribute("user", user);
 
-    return "account"; // Returns account.html
+    return "account";
   }
 
-  // =========================================
-  // Shopping Cart
-  // =========================================
+  /**
+   * Handles requests to view the shopping cart.
+   *
+   * @param session The current HTTP session to verify user login.
+   * @param model Model to pass data to the view.
+   * @return The name of the view for the shopping cart ("cart") or redirects to
+   *         the home page if the user is not logged in.
+   */
   @GetMapping("/cart")
   public String viewCart(HttpSession session, Model model) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
-      // User is not logged in; redirect to home page
       return "redirect:/";
     }
 
-    // Fetch cart items for the user
     List<CartItem> cartItems = cartService.getCartItemsByUserId(userId);
     model.addAttribute("cartItems", cartItems);
 
-    return "cart"; // Returns cart.html
+    return "cart";
   }
 
-  // =========================================
-  // Wishlist
-  // =========================================
+  /**
+   * Handles requests to view the wishlist.
+   *
+   * @param session The current HTTP session to verify user login.
+   * @param model Model to pass data to the view.
+   * @return The name of the view for the wishlist ("wishlist") or redirects to
+   *         the home page if the user is not logged in.
+   */
   @GetMapping("/wishlist")
   public String viewWishlist(HttpSession session, Model model) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
-      // User is not logged in; redirect to home page
       return "redirect:/";
     }
 
-    // Fetch wishlist items for the user
-    List<WishlistItem> wishlistItems = wishlistService.getWishlistByUserId(
-      userId
-    );
+    List<WishlistItem> wishlistItems = wishlistService.getWishlistByUserId(userId);
     model.addAttribute("wishlistItems", wishlistItems);
 
-    return "wishlist"; // Returns wishlist.html
+    return "wishlist";
   }
 }
