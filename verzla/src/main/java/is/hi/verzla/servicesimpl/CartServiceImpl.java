@@ -1,5 +1,12 @@
 package is.hi.verzla.servicesimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import is.hi.verzla.entities.Cart;
 import is.hi.verzla.entities.CartItem;
 import is.hi.verzla.entities.Product;
@@ -9,16 +16,13 @@ import is.hi.verzla.repositories.CartRepository;
 import is.hi.verzla.repositories.ProductRepository;
 import is.hi.verzla.repositories.UserRepository;
 import is.hi.verzla.services.CartService;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the {@link CartService} interface. Provides methods for managing
  * cart items, including adding, retrieving, and removing items from a user's shopping cart.
  */
 @Service
+@Transactional
 public class CartServiceImpl implements CartService {
 
   @Autowired

@@ -1,17 +1,21 @@
 package is.hi.verzla.servicesimpl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import is.hi.verzla.entities.Order;
 import is.hi.verzla.repositories.OrderRepository;
 import is.hi.verzla.services.OrderService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the {@link OrderService} interface. Provides methods for managing
  * orders, including retrieving, creating, and deleting orders.
  */
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
   @Autowired
@@ -27,8 +31,8 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Order getOrderById(Long id) {
     return orderRepository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Order not found with id " + id));
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("Order not found with id " + id));
   }
 
   /**

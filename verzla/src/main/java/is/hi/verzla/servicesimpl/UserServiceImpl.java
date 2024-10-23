@@ -1,17 +1,21 @@
 package is.hi.verzla.servicesimpl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import is.hi.verzla.entities.User;
 import is.hi.verzla.repositories.UserRepository;
 import is.hi.verzla.services.UserService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the {@link UserService} interface. Provides methods for managing users, including
  * creating, updating, retrieving, and deleting user accounts.
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
   @Autowired

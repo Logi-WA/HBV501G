@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import is.hi.verzla.entities.Product;
 import is.hi.verzla.entities.User;
@@ -29,6 +30,7 @@ import is.hi.verzla.services.WishlistService;
  * @see is.hi.verzla.entities.WishlistItem
  */
 @Service
+@Transactional
 public class WishlistServiceImpl implements WishlistService {
 
   /**
