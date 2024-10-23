@@ -13,25 +13,27 @@
     Retrieve all resources in a collection (e.g. All users, all items)
 2. `GET /api/categories` *(1)*  
     Retrieve all resources in a collection (e.g. All users, all items)
-3. `GET /api/products/{id}` *(1)*  
+3. `GET /api/users` *(1)*  
+    Retrieve all resources in a collection (e.g. All users, all items)
+4. `GET /api/products/{id}` *(1)*  
     Retrieve a single resource by ID (e.g. Item, user, order based on unique identifier)
-4. `POST /api/users` *(2)*  
+5. `POST /api/users` *(2)*  
     Create new resource (e.g. New item, new user account)
-5. `GET /api/users/me` *(2)*  
+6. `GET /api/users/me` *(2)*  
     Retrieve user-specific data (e.g. User profile, user settings)
-6. `PATCH /api/users/me` *(2)*  
+7. `PATCH /api/users/me` *(2)*  
     Partially update resource details (e.g. update user profile, change multiple item details)
-7. `PATCH /api/users/me/password` *(2)*  
+8. `PATCH /api/users/me/password` *(2)*  
     Partially update resource details (e.g. update user profile, change multiple item details)
-8. `POST /api/cart` *(2)*  
+9. `POST /api/cart` *(2)*  
     Create an association between resources (e.g. Add item to users favourites)
-9. `POST /api/wishlist` *(2)*  
+10. `POST /api/wishlist` *(2)*  
     Create an association between resources (e.g. Add item to users favourites)
-10. `GET /api/cart/cart` / `GET /api/cart` *(2)*  
+11. `GET /api/cart/cart` / `GET /api/cart` *(2)*  
     Retrieve associated resouces (e.g. User favourites, user orders)
-11. `GET /api/cart/wishlist` / `GET /api/wishlist` *(2)*  
+12. `GET /api/cart/wishlist` / `GET /api/wishlist` *(2)*  
     Retrieve associated resouces (e.g. User favourites, user orders)
-12. `PATCH /api/cart/{id}` *(3)*  
+13. `PATCH /api/cart/{id}` *(3)*  
     Update nested resource (e.g. update specific attributes of items in an order)
 
 ### Not (All) Implemented in UI

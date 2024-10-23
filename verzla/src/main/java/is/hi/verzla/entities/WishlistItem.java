@@ -142,16 +142,16 @@ public class WishlistItem {
    *
    * @return the user who owns this wishlist item
    */
-/*   public User getUser() {
+  public User getUser() {
     return user;
-  } */
+  }
 
   /**
    * Associates this wishlist item with a specific user.
    *
    * @param user the user to associate
    */
-/*   public void setUser(User user) {
+  public void setUser(User user) {
     this.user = user;
-  } */
+  }
 }
