@@ -1,7 +1,12 @@
 package is.hi.verzla.controllers;
 
+import is.hi.verzla.entities.WishlistItem;
+import is.hi.verzla.services.WishlistService;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import is.hi.verzla.controllers.CartController.ProductRequest;
-import is.hi.verzla.entities.WishlistItem;
-import is.hi.verzla.services.WishlistService;
-import jakarta.servlet.http.HttpSession;
 
 /**
  * Controller for managing wishlist-related actions such as adding, removing,
@@ -45,14 +46,25 @@ public class WishlistController {
    * @return A message indicating success or failure.
    */
   @PostMapping
-  public String addToWishlist(@RequestBody ProductRequest productRequest, HttpSession session) {
+  public ResponseEntity<?> addToWishlist(
+    @RequestBody ProductRequest productRequest,
+    HttpSession session
+  ) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
-      return "User must be logged in to add items to wishlist";
+      return ResponseEntity
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User must be logged in to add items to wishlist");
     }
     Long productId = productRequest.getProductId();
-    wishlistService.addProductToWishlist(userId, productId);
-    return "Product added to wishlist";
+    try {
+      wishlistService.addProductToWishlist(userId, productId);
+      return ResponseEntity.ok("Product added to wishlist");
+    } catch (Exception e) {
+      return ResponseEntity
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error adding product to wishlist");
+    }
   }
 
   /**
@@ -63,7 +75,10 @@ public class WishlistController {
    * @return A message indicating success of the removal.
    */
   @DeleteMapping
-  public String removeFromWishlist(@RequestBody Long productId, HttpSession session) {
+  public String removeFromWishlist(
+    @RequestBody Long productId,
+    HttpSession session
+  ) {
     Long userId = (Long) session.getAttribute("userId");
     wishlistService.removeProductFromWishlist(userId, productId);
     return "Product removed from wishlist";
@@ -84,7 +99,10 @@ public class WishlistController {
       return "redirect:/";
     }
 
-    List<WishlistItem> wishlistItems = wishlistService.getWishlistByUserId(userId);
+    // Fetch wishlist items for the user
+    List<WishlistItem> wishlistItems = wishlistService.getWishlistByUserId(
+      userId
+    );
     model.addAttribute("wishlistItems", wishlistItems);
 
     return "wishlist";
@@ -94,6 +112,7 @@ public class WishlistController {
    * Inner static class to represent the product request payload.
    */
   public static class ProductRequest {
+
     private Long productId;
 
     public Long getProductId() {

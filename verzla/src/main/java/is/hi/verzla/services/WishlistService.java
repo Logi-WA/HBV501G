@@ -1,14 +1,13 @@
 package is.hi.verzla.services;
 
-import java.util.List;
 import is.hi.verzla.entities.WishlistItem;
+import java.util.List;
 
 /**
  * Service interface for managing wishlists.
  * Provides methods to add, retrieve, and remove products from a user's wishlist.
  */
 public interface WishlistService {
-
   /**
    * Retrieves the list of items in a user's wishlist.
    *

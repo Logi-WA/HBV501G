@@ -30,6 +30,19 @@ public class WishlistItem {
   @JoinColumn(name = "wishlist_id")
   private Wishlist wishlist;
 
+  @NotNull(message = "User cannot be null")
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
   /**
    * Default constructor for JPA.
    */

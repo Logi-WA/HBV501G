@@ -1,11 +1,5 @@
 package is.hi.verzla.servicesimpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import is.hi.verzla.entities.Product;
 import is.hi.verzla.entities.User;
 import is.hi.verzla.entities.Wishlist;
@@ -15,6 +9,10 @@ import is.hi.verzla.repositories.UserRepository;
 import is.hi.verzla.repositories.WishlistItemRepository;
 import is.hi.verzla.repositories.WishlistRepository;
 import is.hi.verzla.services.WishlistService;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the {@link WishlistService} interface. Provides methods for managing wishlists,
@@ -56,11 +54,17 @@ public class WishlistServiceImpl implements WishlistService {
    */
   @Override
   public void addProductToWishlist(Long userId, Long productId) {
-    Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
+    User user = userRepository
+      .findById(userId)
+      .orElseThrow(() ->
+        new RuntimeException("User not found with id " + userId)
+      );
 
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
+    Product product = productRepository
+      .findById(productId)
+      .orElseThrow(() ->
+        new RuntimeException("Product not found with id " + productId)
+      );
 
     Wishlist wishlist = wishlistRepository.findByUser_Id(userId);
     if (wishlist == null) {
@@ -69,13 +73,19 @@ public class WishlistServiceImpl implements WishlistService {
       wishlist = wishlistRepository.save(wishlist);
     }
 
-    WishlistItem existingItem = wishlistItemRepository.findByWishlistAndProduct(wishlist, product);
-    if (existingItem == null) {
-      WishlistItem newItem = new WishlistItem();
-      newItem.setProduct(product);
-      newItem.setWishlist(wishlist);
-      wishlistItemRepository.save(newItem);
+    WishlistItem existingItem = wishlistItemRepository.findByWishlistAndProduct(
+      wishlist,
+      product
+    );
+    if (existingItem != null) {
+      return;
     }
+
+    WishlistItem newItem = new WishlistItem();
+    newItem.setWishlist(wishlist);
+    newItem.setProduct(product);
+    newItem.setUser(user);
+    wishlistItemRepository.save(newItem);
   }
 
   /**
@@ -87,15 +97,24 @@ public class WishlistServiceImpl implements WishlistService {
    */
   @Override
   public void removeProductFromWishlist(Long userId, Long productId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
+    User user = userRepository
+      .findById(userId)
+      .orElseThrow(() ->
+        new RuntimeException("User not found with id " + userId)
+      );
 
-    Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
+    Product product = productRepository
+      .findById(productId)
+      .orElseThrow(() ->
+        new RuntimeException("Product not found with id " + productId)
+      );
 
     Wishlist wishlist = wishlistRepository.findByUser_Id(userId);
     if (wishlist != null) {
-      WishlistItem item = wishlistItemRepository.findByWishlistAndProduct(wishlist, product);
+      WishlistItem item = wishlistItemRepository.findByWishlistAndProduct(
+        wishlist,
+        product
+      );
       if (item != null) {
         wishlistItemRepository.delete(item);
       }

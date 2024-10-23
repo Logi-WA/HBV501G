@@ -22,13 +22,13 @@
               <div class="col-md-3 mb-3">
                 <div class="card">
                   <img
-                    th:src="@{${item.imageUrl}}"
+                    th:src="@{${item.product.imageUrl}}"
                     class="card-img-top"
                     alt="Product Image"
                   />
                   <div class="card-body">
-                    <h5 class="card-title" th:text="${item.name}"></h5>
-                    <p class="card-text" th:text="'$' + ${item.price}"></p>
+                    <h5 class="card-title" th:text="${item.product.name}"></h5>
+                    <p class="card-text" th:text="'$' + ${item.product.price}"></p>
                   </div>
                 </div>
               </div>
