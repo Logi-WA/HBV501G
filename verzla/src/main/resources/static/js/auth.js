@@ -50,8 +50,8 @@ function updateNavbarLoggedIn(userData) {
           <h6 class="dropdown-header d-flex align-items-center">
             <img class="dropdown-user-img" src="/img/user.png" />
             <div class="dropdown-user-details">
-              <div class="dropdown-user-details-name">User</div>
-              <div class="dropdown-user-details-email">email@example.com</div>
+              <div class="dropdown-user-details-name">${userData.name}</div>
+              <div class="dropdown-user-details-email">${userData.email}</div>
             </div>
           </h6>
           <div class="dropdown-divider"></div>

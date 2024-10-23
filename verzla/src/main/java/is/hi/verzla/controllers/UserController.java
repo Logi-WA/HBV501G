@@ -5,10 +5,10 @@ import is.hi.verzla.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -95,18 +95,62 @@ public class UserController {
       .body("User not logged in");
   }
 
-  @GetMapping("/account")
-  public String accountPage(HttpSession session, Model model) {
+  // Update user details
+  @PatchMapping("/me")
+  public ResponseEntity<?> updateCurrentUser(
+    @RequestBody User userDetails,
+    HttpSession session
+  ) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
-      // User is not logged in; redirect to login page
-      return "redirect:/";
+      return ResponseEntity
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User not logged in");
     }
 
-    // Pass user information to the view
-    String userName = (String) session.getAttribute("userName");
-    model.addAttribute("userName", userName);
+    try {
+      User updatedUser = userService.updateUser(userId, userDetails);
+      // Update session attributes if necessary
+      session.setAttribute("userName", updatedUser.getName());
+      session.setAttribute("userEmail", updatedUser.getEmail());
+      return ResponseEntity.ok(updatedUser);
+    } catch (Exception e) {
+      return ResponseEntity
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error updating user");
+    }
+  }
 
-    return "account";
+  // Update password
+  @PatchMapping("/me/password")
+  public ResponseEntity<?> updateCurrentUserPassword(
+    @RequestBody Map<String, String> passwords,
+    HttpSession session
+  ) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return ResponseEntity
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User not logged in");
+    }
+
+    String currentPassword = passwords.get("currentPassword");
+    String newPassword = passwords.get("newPassword");
+
+    try {
+      User user = userService.getUserById(userId);
+      if (!user.getPassword().equals(currentPassword)) {
+        return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body("Current password is incorrect");
+      }
+
+      userService.updatePassword(userId, newPassword);
+      return ResponseEntity.ok("Password updated successfully");
+    } catch (Exception e) {
+      return ResponseEntity
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error updating password");
+    }
   }
 }

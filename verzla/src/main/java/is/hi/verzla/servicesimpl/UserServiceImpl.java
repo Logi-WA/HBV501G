@@ -36,10 +36,15 @@ public class UserServiceImpl implements UserService {
       .findById(id)
       .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
-    if (userDetails.getName() != null) {
+    if (userDetails.getName() != null && !userDetails.getName().isEmpty()) {
       user.setName(userDetails.getName());
     }
-    if (userDetails.getEmail() != null) {
+    if (userDetails.getEmail() != null && !userDetails.getEmail().isEmpty()) {
+      // Check if the new email is already in use by another user
+      User existingUser = userRepository.findByEmail(userDetails.getEmail());
+      if (existingUser != null && !existingUser.getId().equals(id)) {
+        throw new RuntimeException("Email already in use");
+      }
       user.setEmail(userDetails.getEmail());
     }
 
