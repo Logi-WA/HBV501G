@@ -22,7 +22,7 @@
 6. `PATCH /api/users/me` *(2)*  
     Partially update resource details (e.g. update user profile, change multiple item details)
 7. `PATCH /api/users/me/password` *(2)*  
-    Partially update resource details (e.g. update user profile, change multiple item details
+    Partially update resource details (e.g. update user profile, change multiple item details)
 8. `POST /api/cart` *(2)*  
     Create an association between resources (e.g. Add item to users favourites)
 9. `POST /api/wishlist` *(2)*  
@@ -54,12 +54,12 @@
 
 ## Examples
 
-### Assignment 2 Examples
+### Assignment 2 API Examples
 
 1. `curl -X POST localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\": \"user\", \"password\": \"password\"}"`
 2. `curl localhost:8080/api/categories`
 
-### Assignment 3 Examples
+### Assignment 3 API Examples
 
 1. `curl -X GET http://localhost:8080/api/users`
 2. `curl -X POST http://localhost:8080/api/users -H "Content-Type: application/json" -d "{\"email\": \"new.email@example.com\"}"`

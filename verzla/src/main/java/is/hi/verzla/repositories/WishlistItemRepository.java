@@ -1,22 +1,32 @@
 package is.hi.verzla.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import is.hi.verzla.entities.Product;
 import is.hi.verzla.entities.Wishlist;
 import is.hi.verzla.entities.WishlistItem;
 
 /**
  * Repository interface for performing CRUD operations on {@link WishlistItem} entities.
- * Provides methods to interact with wishlist items in the database.
+ * <p>
+ * Extends {@link JpaRepository} to provide standard data access methods, and includes
+ * custom query methods tailored to the application's requirements.
+ * </p>
+ *
+ * @see org.springframework.data.jpa.repository.JpaRepository
+ * @see is.hi.verzla.entities.WishlistItem
  */
 public interface WishlistItemRepository extends JpaRepository<WishlistItem, Long> {
 
   /**
-   * Finds a specific {@link WishlistItem} by its associated {@link Wishlist} and {@link Product}.
+   * Finds a {@link WishlistItem} by its associated {@link Wishlist} and {@link Product}.
    *
-   * @param wishlist The wishlist to which the item belongs.
-   * @param product The product associated with the wishlist item.
-   * @return The {@link WishlistItem} that matches the specified wishlist and product, or null if none is found.
+   * @param wishlist The {@link Wishlist} to search within.
+   * @param product  The {@link Product} to find in the wishlist.
+   * @return The {@link WishlistItem} matching the given wishlist and product, or {@code null}
+   *         if no such item exists.
+   *
+   * @throws IllegalArgumentException if {@code wishlist} or {@code product} is {@code null}.
    */
   WishlistItem findByWishlistAndProduct(Wishlist wishlist, Product product);
 }

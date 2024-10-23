@@ -1,11 +1,8 @@
 package is.hi.verzla.controllers;
 
-import is.hi.verzla.entities.User;
-import is.hi.verzla.services.UserService;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +15,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.verzla.entities.User;
+import is.hi.verzla.services.UserService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 /**
- * REST controller for managing user-related operations.
+ * REST controller for managing user-related operations such as creating,
+ * retrieving, updating, and deleting user accounts.
+ * <p>
+ * This controller handles HTTP requests mapped to {@code /api/users} and
+ * interacts with the {@link UserService} to perform operations on
+ * {@link User} entities.
+ * </p>
+ *
+ * <p>
+ * Supported operations include:
+ * <ul>
+ *   <li>Retrieving all users</li>
+ *   <li>Retrieving a user by ID</li>
+ *   <li>Creating a new user</li>
+ *   <li>Updating user details</li>
+ *   <li>Updating user passwords</li>
+ *   <li>Deleting a user</li>
+ *   <li>Managing the currently logged-in user's information</li>
+ * </ul>
+ * </p>
+ *
+ * @see UserService
+ * @see User
  */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
+  /**
+  * Service layer for handling user-related business logic.
+  */
   @Autowired
   private UserService userService;
 
   /**
    * Retrieves a list of all users.
    *
-   * @return A list of all User entities.
+   * @return A {@code List} of all {@link User} entities.
+   *
+   * @apiNote This operation is typically restricted to administrative users.
    */
   @GetMapping
   public List<User> getAllUsers() {
@@ -39,28 +68,42 @@ public class UserController {
   }
 
   /**
-   * Retrieves a user by their ID.
+   * Retrieves a specific user by their unique ID.
    *
    * @param id The ID of the user to retrieve.
-   * @return The User entity with the specified ID.
+   * @return The {@link User} entity with the specified ID, or an error response
+   *         if the user is not found.
+   *
+   * @apiNote Ensure that only authorized users can access user details.
    */
   @GetMapping("/{id}")
-  public User getUserById(@PathVariable Long id) {
-    return userService.getUserById(id);
+  public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    User user = userService.getUserById(id);
+    if (user != null) {
+      return ResponseEntity.ok(user);
+    } else {
+      return ResponseEntity
+          .status(HttpStatus.NOT_FOUND)
+          .body("User not found with id " + id);
+    }
   }
 
   /**
-   * Creates a new user.
+   * Creates a new user account.
    *
-   * @param user The User entity to be created.
-   * @return A ResponseEntity indicating success or conflict if the email is already in use.
+   * @param user The {@link User} entity to be created. Must be valid according to
+   *             the validation constraints defined in the {@code User} class.
+   * @return A {@link ResponseEntity} indicating success with the created user,
+   *         or a conflict response if the email is already in use.
+   *
+   * @apiNote Passwords should be securely hashed before being stored.
    */
   @PostMapping
   public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
     if (userService.getUserByEmail(user.getEmail()) != null) {
       return ResponseEntity
-        .status(HttpStatus.CONFLICT)
-        .body("Email already in use");
+          .status(HttpStatus.CONFLICT)
+          .body("Email already in use");
     }
 
     try {
@@ -68,56 +111,96 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error creating user");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error creating user");
     }
   }
 
   /**
-   * Updates a user's details using a patch request.
+   * Updates a user's details using a PATCH request.
    *
-   * @param id The ID of the user to update.
-   * @param userDetails The updated user details.
-   * @return The updated User entity.
+   * @param id          The ID of the user to update.
+   * @param userDetails A {@link User} object containing the updated user details.
+   * @return A {@link ResponseEntity} containing the updated user, or an error
+   *         response if the update fails.
+   *
+   * @apiNote Only certain fields should be updatable to maintain data integrity.
    */
   @PatchMapping("/{id}")
-  public User patchUser(@PathVariable Long id, @RequestBody User userDetails) {
-    return userService.updateUser(id, userDetails);
+  public ResponseEntity<?> patchUser(@PathVariable Long id, @RequestBody User userDetails) {
+    try {
+      User updatedUser = userService.updateUser(id, userDetails);
+      return ResponseEntity.ok(updatedUser);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error updating user");
+    }
   }
 
   /**
    * Updates the password of a user by their ID.
    *
-   * @param id The ID of the user.
+   * @param id          The ID of the user.
    * @param newPassword The new password to set.
-   * @return A confirmation message.
+   * @return A {@link ResponseEntity} containing a confirmation message, or an
+   *         error response if the update fails.
    */
   @PatchMapping("/{id}/password")
-  public String updatePassword(
-    @PathVariable Long id,
-    @RequestBody String newPassword
-  ) {
-    userService.updatePassword(id, newPassword);
-    return "Password updated successfully";
+  public ResponseEntity<String> updatePassword(
+      @PathVariable Long id,
+      @RequestBody String newPassword) {
+    try {
+      userService.updatePassword(id, newPassword);
+      return ResponseEntity.ok("Password updated successfully");
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error updating password");
+    }
   }
 
   /**
-   * Deletes a user by their ID.
+   * Deletes a user by their unique ID.
    *
    * @param id The ID of the user to delete.
-   * @return A confirmation message.
+   * @return A {@link ResponseEntity} containing a confirmation message, or an
+   *         error response if the deletion fails.
+   *
+   * @apiNote Deleting a user should also handle cascading deletions or data integrity.
    */
   @DeleteMapping("/{id}")
-  public String deleteUser(@PathVariable Long id) {
-    userService.deleteUser(id);
-    return "User deleted with id " + id;
+  public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+    try {
+      userService.deleteUser(id);
+      return ResponseEntity.ok("User deleted with id " + id);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error deleting user");
+    }
   }
 
   /**
    * Retrieves the currently logged-in user from the session.
    *
    * @param session The current HTTP session.
-   * @return The User entity if logged in, or an unauthorized response if not.
+   * @return A {@link ResponseEntity} containing the {@link User} entity if logged in,
+   *         or an unauthorized response if not.
+   *
+   * @apiNote This endpoint is useful for frontend applications to fetch user details.
    */
   @GetMapping("/me")
   public ResponseEntity<?> getCurrentUser(HttpSession session) {
@@ -129,27 +212,29 @@ public class UserController {
       }
     }
     return ResponseEntity
-      .status(HttpStatus.UNAUTHORIZED)
-      .body("User not logged in");
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User not logged in");
   }
 
   /**
    * Updates the details of the currently logged-in user.
    *
    * @param userDetails The updated user details.
-   * @param session The current HTTP session.
-   * @return The updated User entity or an unauthorized response if not logged in.
+   * @param session     The current HTTP session.
+   * @return A {@link ResponseEntity} containing the updated {@link User} entity,
+   *         or an unauthorized response if not logged in.
+   *
+   * @apiNote Only certain fields should be updatable to maintain data integrity.
    */
   @PatchMapping("/me")
   public ResponseEntity<?> updateCurrentUser(
-    @RequestBody User userDetails,
-    HttpSession session
-  ) {
+      @RequestBody User userDetails,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("User not logged in");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("User not logged in");
     }
 
     try {
@@ -157,30 +242,37 @@ public class UserController {
       session.setAttribute("userName", updatedUser.getName());
       session.setAttribute("userEmail", updatedUser.getEmail());
       return ResponseEntity.ok(updatedUser);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error updating user");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error updating user");
     }
   }
 
   /**
    * Updates the password of the currently logged-in user.
    *
-   * @param passwords A map containing the current and new passwords.
-   * @param session The current HTTP session.
-   * @return A confirmation message or an error response if the current password is incorrect or not logged in.
+   * @param passwords A {@code Map} containing the current and new passwords.
+   *                  Expected keys: {@code "currentPassword"} and {@code "newPassword"}.
+   * @param session   The current HTTP session.
+   * @return A {@link ResponseEntity} containing a confirmation message or an
+   *         error response if the current password is incorrect or not logged in.
+   *
+   * @apiNote Passwords should be securely hashed before being stored.
    */
   @PatchMapping("/me/password")
   public ResponseEntity<?> updateCurrentUserPassword(
-    @RequestBody Map<String, String> passwords,
-    HttpSession session
-  ) {
+      @RequestBody Map<String, String> passwords,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("User not logged in");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("User not logged in");
     }
 
     String currentPassword = passwords.get("currentPassword");
@@ -190,16 +282,49 @@ public class UserController {
       User user = userService.getUserById(userId);
       if (!user.getPassword().equals(currentPassword)) {
         return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body("Current password is incorrect");
+            .status(HttpStatus.BAD_REQUEST)
+            .body("Current password is incorrect");
       }
 
       userService.updatePassword(userId, newPassword);
       return ResponseEntity.ok("Password updated successfully");
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error updating password");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error updating password");
+    }
+  }
+
+  /**
+  * Inner static class representing the payload for adding a product to the
+  * shopping cart.
+  */
+  public static class ProductRequest {
+    /**
+     * The ID of the product to be added to the cart.
+     */
+    private Long productId;
+
+    /**
+     * Retrieves the product ID from the request.
+     *
+     * @return The ID of the product to add.
+     */
+    public Long getProductId() {
+      return productId;
+    }
+
+    /**
+     * Sets the product ID for the request.
+     *
+     * @param productId The ID of the product to add.
+     */
+    public void setProductId(Long productId) {
+      this.productId = productId;
     }
   }
 }
