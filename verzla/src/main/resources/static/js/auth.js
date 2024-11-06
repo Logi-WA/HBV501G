@@ -71,6 +71,12 @@ function updateNavbarLoggedIn(userData) {
             </div>
             Account
           </a>
+          <a class="dropdown-item" href="#">
+            <div class="dropdown-item-icon">
+              <i class="fas fa-shield"></i>
+            </div>
+            Admin Dashboard
+          </a>
           <a class="dropdown-item" href="#" onclick="logout()">
             <div class="dropdown-item-icon">
               <i data-feather="log-out"></i>

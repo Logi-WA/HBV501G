@@ -1,24 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
   <title>Wishlist - Verzla</title>
-  <head th:replace="~{fragments/head :: head}">
-  </head>
+  <head th:replace="~{fragments/head :: head}"> </head>
   <body id="page-top" class="bg-dark">
     <div id="layoutDefault">
       <div id="layoutDefault_content" class="bg-light">
         <main>
           <div th:replace="~{fragments/pageNav :: pageNav}"></div>
-          <div th:replace="~{fragments/pageHeader :: pageHeader(title='Wishlist', icon='fa-heart')}"></div>
+          <div
+            th:replace="~{fragments/pageHeader :: pageHeader(title='Wishlist', icon='fa-heart')}"
+          ></div>
           <div th:replace="~{fragments/auth-login :: auth-login}"></div>
           <div th:replace="~{fragments/auth-register :: auth-register}"></div>
           <div th:replace="~{fragments/auth-password :: auth-password}"></div>
 
-          <div class="container py-5">
-            <h2>Your Wishlist</h2>
+          <div class="col-lg-8 offset-lg-2 container py-4">
             <div th:if="${wishlistItems.isEmpty()}">
               <p>Your wishlist is empty.</p>
             </div>
-            <div class="row" th:each="item : ${wishlistItems}">
+            <div class="row gx-5 bg-white py-2">
+              <ol class="list-group list-group-flush list-group-numbered">
+                <li
+                  class="list-group-item d-flex align-items-start"
+                  th:each="item : ${wishlistItems}"
+                >
+                  <div class="ms-2 col-2">
+                    <img
+                      class="img img-fluid"
+                      th:src="@{${item.product.imageUrl}}"
+                      alt="Product Image"
+                    />
+                  </div>
+                  <div class="col-6 p-2">
+                    <h4 th:text="${item.product.name}"></h4>
+                    <hr class="mt-0"/>
+                    <p class="text-body" th:text="${item.product.description}"></p>
+                  </div>
+                  <div class="col-2 h-100 align-items-center">
+                    <div class="col-12">
+                      <p
+                        class="lead fs-1 mb-0"
+                        th:text="'$' + ${item.product.price}"
+                      ></p>
+                    </div>
+                  </div>
+                  <div
+                    class="col-2 row h-100 align-content-around justify-content-center"
+                  >
+                    <div class="col-12">
+                      <button class="btn btn-sm btn-outline-success fs-1">
+                        <i class="fas fa-cart-plus"></i>
+                      </button>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-sm btn-outline-danger fs-1">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ol>
+            </div>
+            <!-- <div class="row" th:each="item : ${wishlistItems}">
               <div class="col-md-3 mb-3">
                 <div class="card">
                   <img
@@ -32,7 +75,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </main>
       </div>
