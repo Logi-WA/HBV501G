@@ -10,9 +10,6 @@
           <div
             th:replace="~{fragments/pageHeader :: pageHeader(title='Cart', icon='fa-cart-shopping')}"
           ></div>
-          <div th:replace="~{fragments/auth-login :: auth-login}"></div>
-          <div th:replace="~{fragments/auth-register :: auth-register}"></div>
-          <div th:replace="~{fragments/auth-password :: auth-password}"></div>
 
             <div class="col-lg-8 container">
               <div th:if="${cartItems.isEmpty()}">

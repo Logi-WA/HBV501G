@@ -10,10 +10,7 @@
           <div
             th:replace="~{fragments/pageHeader :: pageHeader(title='Wishlist', icon='fa-heart')}"
           ></div>
-          <div th:replace="~{fragments/auth-login :: auth-login}"></div>
-          <div th:replace="~{fragments/auth-register :: auth-register}"></div>
-          <div th:replace="~{fragments/auth-password :: auth-password}"></div>
-
+          
           <div class="col-lg-8 offset-lg-2 container py-4">
             <div th:if="${wishlistItems.isEmpty()}">
               <p>Your wishlist is empty.</p>

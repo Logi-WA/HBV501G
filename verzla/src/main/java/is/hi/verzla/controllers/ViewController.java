@@ -1,5 +1,12 @@
 package is.hi.verzla.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import is.hi.verzla.entities.CartItem;
 import is.hi.verzla.entities.Category;
 import is.hi.verzla.entities.Product;
@@ -11,11 +18,6 @@ import is.hi.verzla.services.ProductService;
 import is.hi.verzla.services.UserService;
 import is.hi.verzla.services.WishlistService;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Controller responsible for handling view-related actions such as displaying
@@ -116,5 +118,20 @@ public class ViewController {
     model.addAttribute("wishlistItems", wishlistItems);
 
     return "wishlist";
+  }
+
+  @GetMapping("/admin")
+  public String adminPage(HttpSession session, Model model) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return "redirect:/";
+    }
+
+    List<Product> products = productService.getProducts(null);
+    model.addAttribute("products", products);
+    List<User> users = userService.getAllUsers();
+    model.addAttribute("users", users);
+
+    return "admin";
   }
 }

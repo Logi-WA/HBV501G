@@ -71,7 +71,7 @@ function updateNavbarLoggedIn(userData) {
             </div>
             Account
           </a>
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" href="/admin">
             <div class="dropdown-item-icon">
               <i class="fas fa-shield"></i>
             </div>
