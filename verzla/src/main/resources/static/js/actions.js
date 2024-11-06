@@ -157,3 +157,44 @@ function displayUsers(users) {
     usersList.appendChild(listItem); // Append list item to the usersList
   });
 }
+
+/**
+ * Fetches a specific product by its ID and displays its details.
+ * This function can be triggered by a button or link in the frontend that specifies the product ID.
+ *
+ * @param {number} productId - The ID of the product to retrieve.
+ */
+async function fetchProductById(productId) {
+  try {
+    // Send a GET request to fetch the product by its ID
+    const response = await fetch(`/api/products/${productId}`, {
+      method: 'GET',
+      credentials: 'include', // Ensures session data is included
+    });
+
+    if (response.ok) {
+      // Parse JSON response if the request is successful
+      const product = await response.json();
+      displayProductDetails(product); // Display the product details in HTML
+    } else {
+      alert("Failed to retrieve product details."); // Notify user of unsuccessful request
+    }
+  } catch (error) {
+    console.error("Error fetching product details:", error); // Log any network or server errors
+  }
+}
+
+/**
+ * Displays the details of a specific product in the `productDetails` section.
+ *
+ * @param {Object} product - The product object containing `name`, `price`, `description`, etc.
+ */
+function displayProductDetails(product) {
+  const productDetails = document.getElementById("productDetails");
+  productDetails.innerHTML = `
+    <h2>${product.name}</h2>
+    <p>Price: $${product.price}</p>
+    <p>${product.description}</p>
+    <img src="${product.imageUrl}" alt="Product Image" style="max-width: 100%; height: auto;">
+  `;
+}
