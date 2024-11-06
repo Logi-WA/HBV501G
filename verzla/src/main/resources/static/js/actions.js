@@ -115,3 +115,45 @@ async function addToCart(productId) {
     console.error('Error adding to cart:', error);
   }
 }
+
+/**
+ * Fetches all users from the server and displays them in the `usersList` section.
+ * This function is triggered by the "Get All Users" button on the frontend.
+ */
+async function fetchAllUsers() {
+  try {
+    // Send a GET request to fetch all users
+    const response = await fetch('/api/users', {
+      method: 'GET',
+      credentials: 'include', // Ensures session information is included
+    });
+
+    if (response.ok) {
+      // Parse JSON response if the request is successful
+      const users = await response.json();
+      displayUsers(users); // Display users in the HTML list
+    } else {
+      alert("Failed to retrieve users."); // Notify user of an unsuccessful request
+    }
+  } catch (error) {
+    console.error("Error fetching users:", error); // Log any network or server errors
+  }
+}
+
+/**
+ * Displays the list of users in an HTML unordered list (`<ul>`).
+ * Each user is shown as a list item (`<li>`), displaying their name and email.
+ *
+ * @param {Array} users - The list of user objects to display, each with `name` and `email`.
+ */
+function displayUsers(users) {
+  const usersList = document.getElementById("usersList");
+  usersList.innerHTML = ''; // Clear any existing list items
+
+  users.forEach(user => {
+    // Create a new list item for each user
+    const listItem = document.createElement("li");
+    listItem.textContent = `${user.name} (${user.email})`; // Format: Name (Email)
+    usersList.appendChild(listItem); // Append list item to the usersList
+  });
+}

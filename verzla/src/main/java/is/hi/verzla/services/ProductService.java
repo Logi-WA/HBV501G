@@ -33,4 +33,23 @@ public interface ProductService {
      * @return The created {@link Product} object.
      */
     Product createProduct(Product product);
+
+    /**
+     * Updates the name of a specific product by its ID.
+     *
+     * @param id The ID of the product to update.
+     * @param newName The new name for the product.
+     * @return The updated {@link Product} object.
+     */
+    Product updateProductName(Long id, String newName);
+
+    /**
+     * Updates the description of a specific product by its ID.
+     *
+     * @param id The ID of the product to update.
+     * @param newDescription The new description for the product.
+     * @return The updated {@link Product} object.
+     */
+    Product updateProductDescription(Long id, String newDescription);
+
 }

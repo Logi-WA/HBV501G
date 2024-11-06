@@ -59,4 +59,20 @@ public class ProductServiceImpl implements ProductService {
   public Product createProduct(Product product) {
     return productRepository.save(product); // Save new product with all its attributes
   }
+
+  @Override
+  public Product updateProductName(Long id, String newName) {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    product.setName(newName);
+    return productRepository.save(product);
+  }
+
+  @Override
+  public Product updateProductDescription(Long id, String newDescription) {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    product.setDescription(newDescription);
+    return productRepository.save(product);
+  }
 }

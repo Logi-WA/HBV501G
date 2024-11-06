@@ -3,8 +3,12 @@ package is.hi.verzla.controllers;
 import is.hi.verzla.entities.Product;
 import is.hi.verzla.services.ProductService;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,5 +59,47 @@ public class ProductController {
   @PostMapping
   public Product createProduct(@RequestBody Product product) {
     return productService.createProduct(product);
+  }
+
+  /**
+   * Updates the name of a specific product by its ID.
+   *
+   * @param id The ID of the product to update.
+   * @param updates A map containing the new name.
+   * @return Response entity with the updated product or error message.
+   */
+  @PatchMapping("/{id}/name")
+  public ResponseEntity<?> updateProductName(
+    @PathVariable Long id,
+    @RequestBody Map<String, String> updates
+  ) {
+    try {
+      String newName = updates.get("name");
+      Product updatedProduct = productService.updateProductName(id, newName);
+      return ResponseEntity.ok(updatedProduct);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("Failed to update product name.");
+    }
+  }
+
+  /**
+   * Updates the description of a specific product by its ID.
+   *
+   * @param id The ID of the product to update.
+   * @param updates A map containing the new description.
+   * @return Response entity with the updated product or error message.
+   */
+  @PatchMapping("/{id}/description")
+  public ResponseEntity<?> updateProductDescription(
+    @PathVariable Long id,
+    @RequestBody Map<String, String> updates
+  ) {
+    try {
+      String newDescription = updates.get("description");
+      Product updatedProduct = productService.updateProductDescription(id, newDescription);
+      return ResponseEntity.ok(updatedProduct);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("Failed to update product description.");
+    }
   }
 }
