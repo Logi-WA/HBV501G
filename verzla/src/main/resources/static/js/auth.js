@@ -51,14 +51,14 @@ function updateNavbarLoggedIn(userData) {
           data-bs-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          ><img class="img-fluid" src="/img/user.png"
+          ><img class="img-fluid" src="/img/user.webp"
         /></a>
         <div
           class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
           aria-labelledby="navbarDropdownUserImage"
         >
           <h6 class="dropdown-header d-flex align-items-center">
-            <img class="dropdown-user-img" src="/img/user.png" />
+            <img class="dropdown-user-img" src="/img/user.webp" />
             <div class="dropdown-user-details">
               <div class="dropdown-user-details-name">${userData.name}</div>
               <div class="dropdown-user-details-email">${userData.email}</div>
