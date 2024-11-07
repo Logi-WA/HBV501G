@@ -66,22 +66,9 @@ public class WishlistItem {
   private Wishlist wishlist;
 
   /**
-   * The user who owns this wishlist item.
-   * <p>
-   * Cannot be null. Links the wishlist item to the user who added the product
-   * to their wishlist.
-   * </p>
-   */
-  @NotNull(message = "User cannot be null")
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
-
-  /**
    * Default constructor for JPA.
    */
-  public WishlistItem() {
-  }
+  public WishlistItem() {}
 
   /**
    * Retrieves the unique identifier of this wishlist item.
@@ -135,23 +122,5 @@ public class WishlistItem {
    */
   public void setWishlist(Wishlist wishlist) {
     this.wishlist = wishlist;
-  }
-
-  /**
-   * Retrieves the user who owns this wishlist item.
-   *
-   * @return the user who owns this wishlist item
-   */
-  public User getUser() {
-    return user;
-  }
-
-  /**
-   * Associates this wishlist item with a specific user.
-   *
-   * @param user the user to associate
-   */
-  public void setUser(User user) {
-    this.user = user;
   }
 }

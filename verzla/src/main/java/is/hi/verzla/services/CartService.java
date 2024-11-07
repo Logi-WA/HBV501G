@@ -1,14 +1,13 @@
 package is.hi.verzla.services;
 
-import java.util.List;
 import is.hi.verzla.entities.CartItem;
+import java.util.List;
 
 /**
  * Service interface for handling operations related to the shopping cart.
  * Provides methods for retrieving, adding, updating, and removing cart items.
  */
 public interface CartService {
-
   /**
    * Retrieves a list of cart items for a specific user.
    *

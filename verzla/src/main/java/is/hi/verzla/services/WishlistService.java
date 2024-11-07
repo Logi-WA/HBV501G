@@ -1,8 +1,7 @@
 package is.hi.verzla.services;
 
-import java.util.List;
-
 import is.hi.verzla.entities.WishlistItem;
+import java.util.List;
 
 /**
  * Service interface for managing user wishlists.
@@ -20,7 +19,6 @@ import is.hi.verzla.entities.WishlistItem;
  * @see is.hi.verzla.entities.WishlistItem
  */
 public interface WishlistService {
-
   /**
    * Retrieves the list of items in a user's wishlist.
    *

@@ -1,7 +1,9 @@
 package is.hi.verzla.controllers;
 
+import is.hi.verzla.entities.CartItem;
+import is.hi.verzla.services.CartService;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import is.hi.verzla.entities.CartItem;
-import is.hi.verzla.services.CartService;
-import jakarta.servlet.http.HttpSession;
 
 /**
  * REST controller for managing shopping cart-related actions such as adding,
@@ -47,8 +45,8 @@ import jakarta.servlet.http.HttpSession;
 public class CartController {
 
   /**
-  * Service layer for handling cart-related business logic.
-  */
+   * Service layer for handling cart-related business logic.
+   */
   @Autowired
   private CartService cartService;
 
@@ -77,13 +75,14 @@ public class CartController {
    */
   @PostMapping
   public ResponseEntity<String> addToCart(
-      @RequestBody ProductRequest productRequest,
-      HttpSession session) {
+    @RequestBody ProductRequest productRequest,
+    HttpSession session
+  ) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-          .status(HttpStatus.UNAUTHORIZED)
-          .body("User must be logged in to add items to cart");
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User must be logged in to add items to cart");
     }
     Long productId = productRequest.getProductId();
     try {
@@ -91,8 +90,8 @@ public class CartController {
       return ResponseEntity.ok("Product added to cart");
     } catch (Exception e) {
       return ResponseEntity
-          .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body("Error adding product to cart");
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error adding product to cart");
     }
   }
 
@@ -108,19 +107,18 @@ public class CartController {
    */
   @PatchMapping("/{id}")
   public ResponseEntity<?> updateCartItem(
-      @PathVariable Long id,
-      @RequestBody int quantity) {
+    @PathVariable Long id,
+    @RequestBody int quantity
+  ) {
     try {
       CartItem updatedItem = cartService.updateCartItemQuantity(id, quantity);
       return ResponseEntity.ok(updatedItem);
     } catch (IllegalArgumentException e) {
-      return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body(e.getMessage());
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     } catch (Exception e) {
       return ResponseEntity
-          .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body("Error updating cart item");
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error updating cart item");
     }
   }
 
@@ -137,21 +135,22 @@ public class CartController {
    */
   @DeleteMapping
   public ResponseEntity<String> removeFromCart(
-      @RequestBody Long productId,
-      HttpSession session) {
+    @RequestBody Long productId,
+    HttpSession session
+  ) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-          .status(HttpStatus.UNAUTHORIZED)
-          .body("User must be logged in to remove items from cart");
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User must be logged in to remove items from cart");
     }
     try {
       cartService.removeProductFromCart(userId, productId);
       return ResponseEntity.ok("Product removed from cart");
     } catch (Exception e) {
       return ResponseEntity
-          .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body("Error removing product from cart");
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error removing product from cart");
     }
   }
 
