@@ -1,10 +1,9 @@
 package is.hi.verzla.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import is.hi.verzla.entities.Product;
 import is.hi.verzla.entities.Wishlist;
 import is.hi.verzla.entities.WishlistItem;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Repository interface for performing CRUD operations on {@link WishlistItem} entities.
@@ -16,8 +15,8 @@ import is.hi.verzla.entities.WishlistItem;
  * @see org.springframework.data.jpa.repository.JpaRepository
  * @see is.hi.verzla.entities.WishlistItem
  */
-public interface WishlistItemRepository extends JpaRepository<WishlistItem, Long> {
-
+public interface WishlistItemRepository
+  extends JpaRepository<WishlistItem, Long> {
   /**
    * Finds a {@link WishlistItem} by its associated {@link Wishlist} and {@link Product}.
    *

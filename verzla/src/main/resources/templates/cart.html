@@ -11,7 +11,8 @@
             th:replace="~{fragments/pageHeader :: pageHeader(title='Cart', icon='fa-cart-shopping')}"
           ></div>
 
-            <div class="col-lg-8 container">
+          <section id="cartPage" class="bg-light">
+            <div class="col-lg-8 offset-lg-2 container py-4">
               <div th:if="${cartItems.isEmpty()}">
                 <p>Your cart is empty.</p>
               </div>
@@ -20,6 +21,8 @@
                   <li
                     class="list-group-item d-flex align-items-start"
                     th:each="item : ${cartItems}"
+                    th:data-citem-id="${item.id}"
+                    th:data-product-id="${item.product.id}"
                   >
                     <div class="ms-2 col-2">
                       <img
@@ -30,8 +33,11 @@
                     </div>
                     <div class="col-6 p-2">
                       <h4 th:text="${item.product.name}"></h4>
-                      <hr class="mt-0"/>
-                      <p class="text-body" th:text="${item.product.description}"></p>
+                      <hr class="mt-0" />
+                      <p
+                        class="text-body"
+                        th:text="${item.product.description}"
+                      ></p>
                     </div>
                     <div class="row col-2 h-100 align-items-center">
                       <div class="col-12">
@@ -67,7 +73,10 @@
                     <div
                       class="col-2 d-flex h-100 align-items-center justify-content-center"
                     >
-                      <button class="btn btn-sm btn-outline-danger fs-1">
+                      <button
+                        class="btn btn-sm btn-outline-danger fs-1 lift removeFromCart"
+                        type="button"
+                      >
                         <i class="fas fa-trash"></i>
                       </button>
                     </div>
@@ -75,6 +84,7 @@
                 </ol>
               </div>
             </div>
+          </section>
         </main>
       </div>
       <div id="layoutDefault_footer">

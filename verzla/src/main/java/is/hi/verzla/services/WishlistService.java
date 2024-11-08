@@ -50,5 +50,5 @@ public interface WishlistService {
    * @throws RuntimeException if the user or product cannot be found.
    * @throws IllegalArgumentException if {@code userId} or {@code productId} is {@code null}.
    */
-  void removeProductFromWishlist(Long userId, Long productId);
+  void removeWishlistItem(Long userId, Long wishlistItemId);
 }

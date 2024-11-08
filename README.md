@@ -7,7 +7,7 @@
 
 ## Assignment 3
 
-### Implemented in UI
+### Ass. 3 - Endpoints
 
 1. `GET /api/products` *(1)*  
     Retrieve all resources in a collection (e.g. All users, all items)
@@ -36,35 +36,17 @@
 13. `PATCH /api/cart/{id}` *(3)*  
     Update nested resource (e.g. update specific attributes of items in an order)
 
-### Not (All) Implemented in UI
+## Assignment 4
+
+New view `admin` added. Accessible in the dropdown menu in the top right for logged in users.
+
+### Ass. 4 - Functional Endpoints
 
 1. `GET /api/users` *(1)*
-2. `POST /api/users` *(2)*
-3. `DELETE /api/users/{id}` *(2)*
-4. `GET /api/users/{id}` *(1)*
-5. `PATCH /api/users/{id}` *(2)*
-6. `GET /api/cart` *(1)*
-7. `POST /api/cart` *(2)*
-8. `PATCH /api/cart/{id}` *(3)*
-9. `GET /api/orders/{id}` *(2)*
-10. `GET /api/products` *(1)*
-11. `GET /api/products/{id}` *(1)*
-12. `DELETE /api/wishlist` *(2)*
-13. `GET /api/wishlist` *(2)*
-14. `POST /api/wishlist` *(2)*
-15. `PATCH /api/users/{id}/password` *(2)*
-
-## Examples
-
-### Assignment 2 API Examples
-
-1. `curl -X POST localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\": \"user\", \"password\": \"password\"}"`
-2. `curl localhost:8080/api/categories`
-
-### Assignment 3 API Examples
-
-1. `curl -X GET http://localhost:8080/api/users`
-2. `curl -X POST http://localhost:8080/api/users -H "Content-Type: application/json" -d "{\"email\": \"new.email@example.com\"}"`
-3. `curl -X DELETE http://localhost:8080/api/users/{id}`
-4. `curl -X GET http://localhost:8080/api/users/{id}`
-5. `curl -X PATCH http://localhost:8080/api/users/1 -H "Content-Type: application/json" -d "{\"email\": \"new.email@example.com\"}"`
+    The new admin dashboard provides a table of all users in the database.
+2. `GET /api/products` *(1)*
+    The admin dashboard also provides a table of all products in the database.
+3. `POST /api/products` *(2)*
+    A button has been added to the wishlist page to add a product to the cart.
+4. `DELETE /api/wishlist/{wishlistItemId}` *(2)*
+    A button has been added to the wishlist page to remove a product from the wishlist.

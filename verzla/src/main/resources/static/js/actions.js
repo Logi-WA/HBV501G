@@ -133,10 +133,10 @@ async function fetchAllUsers() {
       const users = await response.json();
       displayUsers(users); // Display users in the HTML list
     } else {
-      alert("Failed to retrieve users."); // Notify user of an unsuccessful request
+      alert('Failed to retrieve users.'); // Notify user of an unsuccessful request
     }
   } catch (error) {
-    console.error("Error fetching users:", error); // Log any network or server errors
+    console.error('Error fetching users:', error); // Log any network or server errors
   }
 }
 
@@ -147,12 +147,12 @@ async function fetchAllUsers() {
  * @param {Array} users - The list of user objects to display, each with `name` and `email`.
  */
 function displayUsers(users) {
-  const usersList = document.getElementById("usersList");
+  const usersList = document.getElementById('usersList');
   usersList.innerHTML = ''; // Clear any existing list items
 
-  users.forEach(user => {
+  users.forEach((user) => {
     // Create a new list item for each user
-    const listItem = document.createElement("li");
+    const listItem = document.createElement('li');
     listItem.textContent = `${user.name} (${user.email})`; // Format: Name (Email)
     usersList.appendChild(listItem); // Append list item to the usersList
   });
@@ -177,10 +177,10 @@ async function fetchProductById(productId) {
       const product = await response.json();
       displayProductDetails(product); // Display the product details in HTML
     } else {
-      alert("Failed to retrieve product details."); // Notify user of unsuccessful request
+      alert('Failed to retrieve product details.'); // Notify user of unsuccessful request
     }
   } catch (error) {
-    console.error("Error fetching product details:", error); // Log any network or server errors
+    console.error('Error fetching product details:', error); // Log any network or server errors
   }
 }
 
@@ -190,7 +190,7 @@ async function fetchProductById(productId) {
  * @param {Object} product - The product object containing `name`, `price`, `description`, etc.
  */
 function displayProductDetails(product) {
-  const productDetails = document.getElementById("productDetails");
+  const productDetails = document.getElementById('productDetails');
   productDetails.innerHTML = `
     <h2>${product.name}</h2>
     <p>Price: $${product.price}</p>

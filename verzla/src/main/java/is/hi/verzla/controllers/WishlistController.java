@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,19 +104,19 @@ public class WishlistController {
    *          is not authenticated, the removal will silently fail or could be
    *          handled differently based on implementation.
    */
-  @DeleteMapping
+  @DeleteMapping("/{wishlistItemId}")
   public ResponseEntity<String> removeFromWishlist(
-    @RequestBody Long productId,
+    @PathVariable Long wishlistItemId,
     HttpSession session
   ) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
         .status(HttpStatus.UNAUTHORIZED)
-        .body("You must be logged in to remove items from the wishlsit");
+        .body("You must be logged in to remove items from the wishlist");
     }
     try {
-      wishlistService.removeProductFromWishlist(userId, productId);
+      wishlistService.removeWishlistItem(userId, wishlistItemId);
       return ResponseEntity.ok("Product removed from wishlist");
     } catch (Exception e) {
       return ResponseEntity

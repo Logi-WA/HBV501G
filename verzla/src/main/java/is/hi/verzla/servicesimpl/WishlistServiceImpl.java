@@ -124,28 +124,20 @@ public class WishlistServiceImpl implements WishlistService {
    * @throws IllegalArgumentException if {@code userId} or {@code productId} is {@code null}.
    */
   @Override
-  public void removeProductFromWishlist(Long userId, Long productId) {
-    User user = userRepository
-      .findById(userId)
+  public void removeWishlistItem(Long userId, Long wishlistItemId) {
+    WishlistItem item = wishlistItemRepository
+      .findById(wishlistItemId)
       .orElseThrow(() ->
-        new RuntimeException("User not found with id " + userId)
+        new RuntimeException(
+          "Wishlist item not found with id " + wishlistItemId
+        )
       );
 
-    Product product = productRepository
-      .findById(productId)
-      .orElseThrow(() ->
-        new RuntimeException("Product not found with id " + productId)
-      );
-
-    Wishlist wishlist = wishlistRepository.findByUser_Id(userId);
-    if (wishlist != null) {
-      WishlistItem item = wishlistItemRepository.findByWishlistAndProduct(
-        wishlist,
-        product
-      );
-      if (item != null) {
-        wishlistItemRepository.delete(item);
-      }
+    // Ensure that the item belongs to the user before deleting it
+    if (!item.getWishlist().getUser().getId().equals(userId)) {
+      throw new RuntimeException("Wishlist item does not belong to user");
     }
+
+    wishlistItemRepository.delete(item);
   }
 }

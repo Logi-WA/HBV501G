@@ -1,8 +1,7 @@
 package is.hi.verzla.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import is.hi.verzla.entities.Wishlist;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Repository interface for performing CRUD operations on {@link Wishlist} entities.
@@ -15,7 +14,6 @@ import is.hi.verzla.entities.Wishlist;
  * @see is.hi.verzla.entities.Wishlist
  */
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
-
   /**
    * Finds a {@link Wishlist} by the ID of its associated user.
    *
