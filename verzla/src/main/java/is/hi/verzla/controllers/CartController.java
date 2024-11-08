@@ -4,6 +4,7 @@ import is.hi.verzla.entities.CartItem;
 import is.hi.verzla.services.CartService;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,20 +106,33 @@ public class CartController {
    * @apiNote The quantity must be a positive integer. Additional validation can be
    *          implemented to enforce business rules.
    */
-  @PatchMapping("/{id}")
-  public ResponseEntity<?> updateCartItem(
-    @PathVariable Long id,
-    @RequestBody int quantity
+  @PatchMapping("/{cartItemId}")
+  public ResponseEntity<?> updateCartItemQuantity(
+    @PathVariable Long cartItemId,
+    @RequestBody Map<String, Integer> requestBody,
+    HttpSession session
   ) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return ResponseEntity
+        .status(HttpStatus.UNAUTHORIZED)
+        .body("User must be logged in to update cart items");
+    }
+
+    int newQuantity = requestBody.get("quantity");
+    if (newQuantity < 1) {
+      return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body("Quantity must be at least 1");
+    }
+
     try {
-      CartItem updatedItem = cartService.updateCartItemQuantity(id, quantity);
-      return ResponseEntity.ok(updatedItem);
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+      cartService.updateCartItemQuantity(cartItemId, newQuantity, userId);
+      return ResponseEntity.ok("Cart item quantity updated");
     } catch (Exception e) {
       return ResponseEntity
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error updating cart item");
+        .body("Error updating cart item quantity");
     }
   }
 
@@ -133,9 +147,9 @@ public class CartController {
    * @apiNote The user must be logged in to perform this operation. If the user
    *          is not authenticated, an {@code UNAUTHORIZED} status is returned.
    */
-  @DeleteMapping
+  @DeleteMapping("/{cartItemId}")
   public ResponseEntity<String> removeFromCart(
-    @RequestBody Long productId,
+    @PathVariable Long cartItemId,
     HttpSession session
   ) {
     Long userId = (Long) session.getAttribute("userId");
@@ -145,7 +159,7 @@ public class CartController {
         .body("User must be logged in to remove items from cart");
     }
     try {
-      cartService.removeProductFromCart(userId, productId);
+      cartService.removeCartItem(userId, cartItemId);
       return ResponseEntity.ok("Product removed from cart");
     } catch (Exception e) {
       return ResponseEntity

@@ -47,6 +47,10 @@ New view `admin` added. Accessible in the dropdown menu in the top right for log
 2. `GET /api/products` *(1)*
     The admin dashboard also provides a table of all products in the database.
 3. `POST /api/products` *(2)*
-    A button has been added to the wishlist page to add a product to the cart.
+    A button has been added to the wishlist page to add a product to a cart.
 4. `DELETE /api/wishlist/{wishlistItemId}` *(2)*
-    A button has been added to the wishlist page to remove a product from the wishlist.
+    A button has been added to the wishlist page to remove a product from a wishlist.
+5. `DELETE /api/cart/{cartItemId}` *(2)*
+    A button has been added to the cart page to remove a product from a cart.
+6. `PATCH /api/cart/{cartItemId}` *(3)*
+    Buttons have been added to the cart page to increment/decrement the quantity of an item in a cart

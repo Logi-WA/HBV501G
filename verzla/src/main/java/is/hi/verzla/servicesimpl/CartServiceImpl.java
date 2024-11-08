@@ -97,14 +97,24 @@ public class CartServiceImpl implements CartService {
    * @return The updated {@link CartItem}.
    */
   @Override
-  public CartItem updateCartItemQuantity(Long cartItemId, int quantity) {
+  public void updateCartItemQuantity(
+    Long cartItemId,
+    int quantity,
+    Long userId
+  ) {
     CartItem cartItem = cartItemRepository
       .findById(cartItemId)
       .orElseThrow(() ->
         new RuntimeException("Cart item not found with id " + cartItemId)
       );
+
+    // Ensure that the cart item belongs to the user
+    if (!cartItem.getCart().getUser().getId().equals(userId)) {
+      throw new RuntimeException("Cart item does not belong to user");
+    }
+
     cartItem.setQuantity(quantity);
-    return cartItemRepository.save(cartItem);
+    cartItemRepository.save(cartItem);
   }
 
   /**
@@ -114,25 +124,18 @@ public class CartServiceImpl implements CartService {
    * @param productId The ID of the product to be removed from the cart.
    */
   @Override
-  public void removeProductFromCart(Long userId, Long productId) {
-    User user = userRepository
-      .findById(userId)
+  public void removeCartItem(Long userId, Long cartItemId) {
+    CartItem item = cartItemRepository
+      .findById(cartItemId)
       .orElseThrow(() ->
-        new RuntimeException("User not found with id " + userId)
+        new RuntimeException("Cart item not found with id " + cartItemId)
       );
 
-    Product product = productRepository
-      .findById(productId)
-      .orElseThrow(() ->
-        new RuntimeException("Product not found with id " + productId)
-      );
-
-    Cart cart = cartRepository.findByUser_Id(userId);
-    if (cart != null) {
-      CartItem item = cartItemRepository.findByCartAndProduct(cart, product);
-      if (item != null) {
-        cartItemRepository.delete(item);
-      }
+    // Ensure that the item belongs to the user before deleting it
+    if (!item.getCart().getUser().getId().equals(userId)) {
+      throw new RuntimeException("Cart item does not belong to user");
     }
+
+    cartItemRepository.delete(item);
   }
 }

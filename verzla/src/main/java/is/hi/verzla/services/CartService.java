@@ -31,13 +31,12 @@ public interface CartService {
    * @param quantity The new quantity to set for the cart item.
    * @return The updated {@link CartItem}.
    */
-  CartItem updateCartItemQuantity(Long cartItemId, int quantity);
-
+  void updateCartItemQuantity(Long cartItemId, int quantity, Long userId);
   /**
    * Removes a product from the user's cart.
    *
    * @param userId The ID of the user whose cart item is to be removed.
    * @param productId The ID of the product to be removed from the cart.
    */
-  void removeProductFromCart(Long userId, Long productId);
+  void removeCartItem(Long userId, Long cartItemId);
 }

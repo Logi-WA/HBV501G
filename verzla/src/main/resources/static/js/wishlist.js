@@ -1,17 +1,11 @@
-console.log('wishlist.js is loaded');
-
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('DOM fully loaded and parsed');
 
   // Check if the user is logged in
   const isLoggedIn = await checkUserLoginStatus();
 
   // If logged in, attach event listeners to buttons
   if (isLoggedIn) {
-    console.log('User is logged in, attaching event listeners');
     attachWishlistEventListeners();
-  } else {
-    console.log('User is not logged in');
   }
 
   // Reattach listeners when navigating back (e.g., from wishlist or cart pages)
@@ -40,17 +34,13 @@ async function checkUserLoginStatus() {
 
 function attachWishlistEventListeners() {
   // Use event delegation
-  console.log('Finding wishlist element');
   const container = document.getElementById('wishlistPage');
   if (!container) {
-    console.log('No wishlist element found');
     return;
   }
-  console.log('Wishlist element found, adding event listener');
 
   // Add event listener to the container, listening for button clicks
   container.addEventListener('click', async (event) => {
-    console.log('Wishlist item clicked');
     // Prevent scrolling
     event.preventDefault();
 
