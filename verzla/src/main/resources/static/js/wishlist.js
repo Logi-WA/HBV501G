@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', async () => {
-
   // Check if the user is logged in
   const isLoggedIn = await checkUserLoginStatus();
 
   // If logged in, attach event listeners to buttons
   if (isLoggedIn) {
     attachWishlistEventListeners();
+    attachBulkActionEventListeners();
   }
 
   // Reattach listeners when navigating back (e.g., from wishlist or cart pages)
   window.addEventListener('popstate', () => {
     attachWishlistEventListeners();
+    attachBulkActionEventListeners();
   });
 });
 
@@ -54,6 +55,23 @@ function attachWishlistEventListeners() {
       await addToCart(wishlistProductId);
     }
   });
+}
+
+function attachBulkActionEventListeners() {
+  const addAllToCartBtn = document.querySelector('.addAllToCart');
+  const clearWishlistBtn = document.querySelector('.clearWishlist');
+
+  if (addAllToCartBtn) {
+    addAllToCartBtn.addEventListener('click', async () => {
+      await addAllToCart();
+    });
+  }
+
+  if (clearWishlistBtn) {
+    clearWishlistBtn.addEventListener('click', async () => {
+      await clearWishlist();
+    });
+  }
 }
 
 // Helper function to extract wishlist item Id from wishlist list
@@ -120,5 +138,45 @@ async function addToCart(productId) {
     }
   } catch (error) {
     console.error('Error adding to cart:', error);
+  }
+}
+
+async function addAllToCart() {
+  try {
+    const response = await fetch('/api/wishlist/addAllToCart', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (response.ok) {
+      alert('All items added to cart!');
+    } else {
+      const error = await response.text();
+      alert('Failed to add items to cart: ' + error);
+    }
+  } catch (error) {
+    console.error('Error adding all items to cart:', error);
+  }
+}
+
+async function clearWishlist() {
+  if (!confirm('Are you sure you want to clear your wishlist?')) {
+    return;
+  }
+  try {
+    const response = await fetch('/api/wishlist/clear', {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+
+    if (response.ok) {
+      alert('Wishlist cleared!');
+      location.reload();
+    } else {
+      const error = await response.text();
+      alert('Failed to clear wishlist: ' + error);
+    }
+  } catch (error) {
+    console.error('Error clearing wishlist:', error);
   }
 }

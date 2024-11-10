@@ -1,10 +1,8 @@
 package is.hi.verzla.controllers;
 
-import is.hi.verzla.entities.CartItem;
-import is.hi.verzla.services.CartService;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.verzla.entities.CartItem;
+import is.hi.verzla.services.CartService;
+import jakarta.servlet.http.HttpSession;
+
 /**
  * REST controller for managing shopping cart-related actions such as adding,
  * removing, updating, and viewing products in the user's cart.
@@ -30,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>
  * Supported operations include:
  * <ul>
- *   <li>Fetching all cart items for the current user</li>
- *   <li>Adding a new product to the cart</li>
- *   <li>Updating the quantity of a cart item</li>
- *   <li>Removing a product from the cart</li>
- *   <li>Rendering the cart view page</li>
+ * <li>Fetching all cart items for the current user</li>
+ * <li>Adding a new product to the cart</li>
+ * <li>Updating the quantity of a cart item</li>
+ * <li>Removing a product from the cart</li>
+ * <li>Rendering the cart view page</li>
  * </ul>
  * </p>
  *
@@ -66,9 +68,11 @@ public class CartController {
   /**
    * Adds a specified product to the current user's shopping cart.
    *
-   * @param productRequest The request payload containing the ID of the product to add.
+   * @param productRequest The request payload containing the ID of the product to
+   *                       add.
    * @param session        The current HTTP session used to obtain the user ID.
-   * @return A {@link ResponseEntity} containing a success message if the operation
+   * @return A {@link ResponseEntity} containing a success message if the
+   *         operation
    *         is successful, or an error message if it fails.
    *
    * @apiNote The user must be logged in to perform this operation. If the user
@@ -76,14 +80,13 @@ public class CartController {
    */
   @PostMapping
   public ResponseEntity<String> addToCart(
-    @RequestBody ProductRequest productRequest,
-    HttpSession session
-  ) {
+      @RequestBody ProductRequest productRequest,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("User must be logged in to add items to cart");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to add items to cart");
     }
     Long productId = productRequest.getProductId();
     try {
@@ -91,8 +94,8 @@ public class CartController {
       return ResponseEntity.ok("Product added to cart");
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error adding product to cart");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error adding product to cart");
     }
   }
 
@@ -103,27 +106,27 @@ public class CartController {
    * @param quantity The new quantity to set for the cart item.
    * @return The updated {@link CartItem} object.
    *
-   * @apiNote The quantity must be a positive integer. Additional validation can be
+   * @apiNote The quantity must be a positive integer. Additional validation can
+   *          be
    *          implemented to enforce business rules.
    */
   @PatchMapping("/{cartItemId}")
   public ResponseEntity<?> updateCartItemQuantity(
-    @PathVariable Long cartItemId,
-    @RequestBody Map<String, Integer> requestBody,
-    HttpSession session
-  ) {
+      @PathVariable Long cartItemId,
+      @RequestBody Map<String, Integer> requestBody,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("User must be logged in to update cart items");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to update cart items");
     }
 
     int newQuantity = requestBody.get("quantity");
     if (newQuantity < 1) {
       return ResponseEntity
-        .status(HttpStatus.BAD_REQUEST)
-        .body("Quantity must be at least 1");
+          .status(HttpStatus.BAD_REQUEST)
+          .body("Quantity must be at least 1");
     }
 
     try {
@@ -131,8 +134,8 @@ public class CartController {
       return ResponseEntity.ok("Cart item quantity updated");
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error updating cart item quantity");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error updating cart item quantity");
     }
   }
 
@@ -141,7 +144,8 @@ public class CartController {
    *
    * @param productId The ID of the product to remove from the cart.
    * @param session   The current HTTP session used to obtain the user ID.
-   * @return A {@link ResponseEntity} containing a success message if the operation
+   * @return A {@link ResponseEntity} containing a success message if the
+   *         operation
    *         is successful, or an error message if it fails.
    *
    * @apiNote The user must be logged in to perform this operation. If the user
@@ -149,22 +153,21 @@ public class CartController {
    */
   @DeleteMapping("/{cartItemId}")
   public ResponseEntity<String> removeFromCart(
-    @PathVariable Long cartItemId,
-    HttpSession session
-  ) {
+      @PathVariable Long cartItemId,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("User must be logged in to remove items from cart");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to remove items from cart");
     }
     try {
       cartService.removeCartItem(userId, cartItemId);
       return ResponseEntity.ok("Product removed from cart");
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error removing product from cart");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error removing product from cart");
     }
   }
 
@@ -221,6 +224,22 @@ public class CartController {
      */
     public void setProductId(Long productId) {
       this.productId = productId;
+    }
+  }
+
+  @PostMapping("/buy")
+  public ResponseEntity<String> buyCart(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to buy items");
+    }
+    try {
+      cartService.buyCart(userId);
+      return ResponseEntity.ok("Items bought successfully");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error buying items");
     }
   }
 }

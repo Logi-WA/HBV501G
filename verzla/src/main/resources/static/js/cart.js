@@ -5,11 +5,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // If logged in, attach event listeners to buttons
   if (isLoggedIn) {
     attachCartEventListeners();
+    attachBuyEventListener();
   }
-
+  
   // Reattach listeners when navigating back (e.g., from wishlist or cart pages)
   window.addEventListener('popstate', () => {
     attachCartEventListeners();
+    attachBuyEventListener();
   });
 });
 
@@ -60,6 +62,16 @@ function attachCartEventListeners() {
       await decrementCartItem(cartItemId);
     }
   });
+}
+
+function attachBuyEventListener() {
+  const buyButton = document.querySelector('.buyNow');
+
+  if (buyButton) {
+    buyButton.addEventListener('click', async () => {
+      await buyCartItems();
+    });
+  }
 }
 
 // Helper function to extract cart item Id from cart list
@@ -169,5 +181,27 @@ async function updateCartItemQuantity(cartItemId, quantity) {
     }
   } catch (error) {
     console.error('Error updating cart item quantity:', error);
+  }
+}
+
+async function buyCartItems() {
+  if (!confirm('Are you sure you want to buy all items in your cart?')) {
+    return;
+  }
+  try {
+    const response = await fetch('/api/cart/buy', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (response.ok) {
+      alert('Items purchased successfully!');
+      location.reload();
+    } else {
+      const error = await response.text();
+      alert('Failed to purchase items: ' + error);
+    }
+  } catch (error) {
+    console.error('Error purchasing items:', error);
   }
 }

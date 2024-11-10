@@ -11,7 +11,7 @@
             th:replace="~{fragments/pageHeader :: pageHeader(title='Wishlist', icon='fa-heart')}"
           ></div>
 
-          <section id="wishlistPage" class="bg-light">
+          <section id="wishlistPage" class="bg-light pb-4">
             <div class="col-lg-8 offset-lg-2 container py-4">
               <div th:if="${wishlistItems.isEmpty()}">
                 <p>Your wishlist is empty.</p>
@@ -64,6 +64,26 @@
                           type="button"
                         >
                           <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="d-flex justify-content-end py-2 px-3">
+                    <div class="row col-2 justify-content-center">
+                      <div class="col-12 d-flex pb-2">
+                        <button
+                          class="btn btn-success rounded-pill fs-5 flex-fill addAllToCart"
+                          type="button"
+                        >
+                          Add All to Cart
+                        </button>
+                      </div>
+                      <div class="col-12 d-flex">
+                        <button
+                          class="btn btn-danger rounded-pill fs-5 flex-fill clearWishlist"
+                          type="button"
+                        >
+                          Clear Wishlist
                         </button>
                       </div>
                     </div>

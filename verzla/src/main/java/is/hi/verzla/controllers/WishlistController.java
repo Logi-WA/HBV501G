@@ -1,9 +1,7 @@
 package is.hi.verzla.controllers;
 
-import is.hi.verzla.entities.WishlistItem;
-import is.hi.verzla.services.WishlistService;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import is.hi.verzla.entities.WishlistItem;
+import is.hi.verzla.services.WishlistService;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * REST controller for managing wishlist-related actions such as adding,
@@ -28,10 +30,10 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>
  * Supported operations include:
  * <ul>
- *   <li>Fetching all wishlist items for the current user</li>
- *   <li>Adding a new product to the wishlist</li>
- *   <li>Removing a product from the wishlist</li>
- *   <li>Rendering the wishlist view page</li>
+ * <li>Fetching all wishlist items for the current user</li>
+ * <li>Adding a new product to the wishlist</li>
+ * <li>Removing a product from the wishlist</li>
+ * <li>Rendering the wishlist view page</li>
  * </ul>
  * </p>
  *
@@ -63,9 +65,11 @@ public class WishlistController {
   /**
    * Adds a specified product to the current user's wishlist.
    *
-   * @param productRequest The request payload containing the ID of the product to add.
+   * @param productRequest The request payload containing the ID of the product to
+   *                       add.
    * @param session        The current HTTP session used to obtain the user ID.
-   * @return A {@link ResponseEntity} containing a success message if the operation
+   * @return A {@link ResponseEntity} containing a success message if the
+   *         operation
    *         is successful, or an error message if it fails.
    *
    * @apiNote The user must be logged in to perform this operation. If the user
@@ -73,14 +77,13 @@ public class WishlistController {
    */
   @PostMapping
   public ResponseEntity<String> addToWishlist(
-    @RequestBody ProductRequest productRequest,
-    HttpSession session
-  ) {
+      @RequestBody ProductRequest productRequest,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("User must be logged in to add items to wishlist");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to add items to wishlist");
     }
     Long productId = productRequest.getProductId();
     try {
@@ -88,8 +91,8 @@ public class WishlistController {
       return ResponseEntity.ok("Product added to wishlist");
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error adding product to wishlist");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error adding product to wishlist");
     }
   }
 
@@ -98,7 +101,8 @@ public class WishlistController {
    *
    * @param productId The ID of the product to remove from the wishlist.
    * @param session   The current HTTP session used to obtain the user ID.
-   * @return A {@code String} message indicating the result of the removal operation.
+   * @return A {@code String} message indicating the result of the removal
+   *         operation.
    *
    * @apiNote The user must be logged in to perform this operation. If the user
    *          is not authenticated, the removal will silently fail or could be
@@ -106,22 +110,21 @@ public class WishlistController {
    */
   @DeleteMapping("/{wishlistItemId}")
   public ResponseEntity<String> removeFromWishlist(
-    @PathVariable Long wishlistItemId,
-    HttpSession session
-  ) {
+      @PathVariable Long wishlistItemId,
+      HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     if (userId == null) {
       return ResponseEntity
-        .status(HttpStatus.UNAUTHORIZED)
-        .body("You must be logged in to remove items from the wishlist");
+          .status(HttpStatus.UNAUTHORIZED)
+          .body("You must be logged in to remove items from the wishlist");
     }
     try {
       wishlistService.removeWishlistItem(userId, wishlistItemId);
       return ResponseEntity.ok("Product removed from wishlist");
     } catch (Exception e) {
       return ResponseEntity
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("Error removing product from wishlist");
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error removing product from wishlist");
     }
   }
 
@@ -145,8 +148,7 @@ public class WishlistController {
 
     // Fetch wishlist items for the user
     List<WishlistItem> wishlistItems = wishlistService.getWishlistByUserId(
-      userId
-    );
+        userId);
     model.addAttribute("wishlistItems", wishlistItems);
 
     return "wishlist";
@@ -179,6 +181,38 @@ public class WishlistController {
      */
     public void setProductId(Long productId) {
       this.productId = productId;
+    }
+  }
+
+  @PostMapping("/addAllToCart")
+  public ResponseEntity<String> addAllToCart(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to perform this action");
+    }
+    try {
+      wishlistService.addAllToCart(userId);
+      return ResponseEntity.ok("All items added to cart");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error adding items to cart");
+    }
+  }
+
+  @DeleteMapping("/clear")
+  public ResponseEntity<String> clearWishlist(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body("User must be logged in to perform this action");
+    }
+    try {
+      wishlistService.clearWishlist(userId);
+      return ResponseEntity.ok("Wishlist cleared");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error clearing wishlist");
     }
   }
 }

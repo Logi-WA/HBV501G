@@ -54,3 +54,9 @@ New view `admin` added. Accessible in the dropdown menu in the top right for log
     A button has been added to the cart page to remove a product from a cart.
 6. `PATCH /api/cart/{cartItemId}` *(3)*
     Buttons have been added to the cart page to increment/decrement the quantity of an item in a cart
+7. `POST /api/wishlist/addAllToCart` *(3)* - (Submit batch data)
+    Button has been added to the wishlist page that adds all items in the users wishlist to the users cart
+8. `DELETE /api/wishlist/clear` *(3)* - (Bulk delete resources)
+    Button has been added to the wishlist page that remove all items from the users wishlist
+9. `POST /api/cart/buy` *(3)* - (Submit batch data)
+    Button has been added to the cart page that 'buys' all items in the users cart
