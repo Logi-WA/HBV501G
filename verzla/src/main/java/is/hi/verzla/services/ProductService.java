@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Service interface for managing products.
- * Provides methods to retrieve, create, and get product details.
+ * Provides methods to retrieve, create, and update product details.
  */
 public interface ProductService {
 
@@ -35,9 +35,19 @@ public interface ProductService {
     Product createProduct(Product product);
 
     /**
+     * Updates both the name and description of a specific product by its ID.
+     *
+     * @param id             The ID of the product to update.
+     * @param newName        The new name for the product.
+     * @param newDescription The new description for the product.
+     * @return The updated {@link Product} object.
+     */
+    Product updateProduct(Long id, String newName, String newDescription);
+
+    /**
      * Updates the name of a specific product by its ID.
      *
-     * @param id The ID of the product to update.
+     * @param id      The ID of the product to update.
      * @param newName The new name for the product.
      * @return The updated {@link Product} object.
      */
@@ -46,10 +56,9 @@ public interface ProductService {
     /**
      * Updates the description of a specific product by its ID.
      *
-     * @param id The ID of the product to update.
+     * @param id             The ID of the product to update.
      * @param newDescription The new description for the product.
      * @return The updated {@link Product} object.
      */
     Product updateProductDescription(Long id, String newDescription);
-
 }

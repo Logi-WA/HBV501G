@@ -1,67 +1,72 @@
+// admin.js
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Attach event listener for edit buttons
-  document.querySelectorAll('.edit-product-button').forEach(button => {
-    button.addEventListener('click', (event) => {
-      const productRow = button.closest('[data-product-id]');
-      const productId = productRow?.getAttribute('data-product-id');
+  // Initialize the modal
+  const modalElement = document.getElementById('editModal');
+  const modal = new bootstrap.Modal(modalElement);
 
-      if (!productId) {
-        console.error("Product ID is missing.");
-        alert("Product ID is missing.");
-        return;
-      }
+  // Event delegation for edit buttons
+  document.addEventListener('click', (event) => {
+    const target = event.target;
 
-      // Populate modal with product details
+    // Check if the clicked element is the edit button or contains it
+    if (
+      target.classList.contains('edit-product-button') ||
+      target.closest('.edit-product-button')
+    ) {
+      const button = target.closest('.edit-product-button');
+      const productId = button.getAttribute('data-product-id');
+      const productName = button.getAttribute('data-product-name');
+      const productDescription = button.getAttribute('data-product-description');
+
+      // Populate modal fields
       document.getElementById('editProductId').value = productId;
-      document.getElementById('newValue').value = productRow.querySelector('td:nth-child(2)').innerText;
-      document.getElementById('fieldSelect').value = 'name';
+      document.getElementById('productName').value = productName || '';
+      document.getElementById('productDescription').value = productDescription || '';
 
-      console.log("Product ID:", productId);
-      const modal = new bootstrap.Modal(document.getElementById('editModal'));
       modal.show();
-    });
+    }
   });
 
   // Save Changes button event listener
   document.getElementById('saveChanges').addEventListener('click', async () => {
     const productId = document.getElementById('editProductId').value;
-    const field = document.getElementById('fieldSelect').value;
-    const newValue = document.getElementById('newValue').value;
+    const newName = document.getElementById('productName').value.trim();
+    const newDescription = document.getElementById('productDescription').value.trim();
 
-    if (!productId || !newValue) {
-      console.error("Product ID or new value is missing.");
-      alert("Product ID or new value is missing.");
+    if (!productId || !newName || !newDescription) {
+      alert("Product ID, name, or description is missing.");
       return;
     }
 
-    console.log("Updating product - ID:", productId, "Field:", field, "New Value:", newValue);
+    // Update product
+    await updateProduct(productId, newName, newDescription);
 
-    await updateProductField(productId, field, newValue);
-    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+    modal.hide();
+    location.reload(); // Reload page to reflect changes
   });
 });
 
-// Function to update product name or description
-async function updateProductField(productId, field, newValue) {
-  const endpoint = field === 'name'
-    ? `/api/products/${productId}/name`
-    : `/api/products/${productId}/description`;
+// Function to update product name and description
+async function updateProduct(productId, newName, newDescription) {
+  const endpoint = `/api/products/${productId}`;
 
   try {
     const response = await fetch(endpoint, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ [field]: newValue })
+      body: JSON.stringify({
+        name: newName,
+        description: newDescription
+      })
     });
 
-    if (response.ok) {
-      alert(`Product ${field} updated successfully!`);
-      location.reload(); // Reload page to reflect changes
-    } else {
+    if (!response.ok) {
       const error = await response.text();
-      alert(`Failed to update product ${field}: ${error}`);
+      alert(`Failed to update product: ${error}`);
     }
   } catch (error) {
-    console.error(`Error updating product ${field}:`, error);
+    console.error(`Error updating product:`, error);
+    alert(`An error occurred while updating the product: ${error.message}`);
   }
 }

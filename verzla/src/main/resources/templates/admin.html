@@ -1,181 +1,198 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
   <title>Admin - Verzla</title>
-  <head>
-    <link
-      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
-      rel="stylesheet"
-    />
-    <div th:replace="~{fragments/head :: head}"></div>
-  </head>
-  <body id="page-top" class="bg-dark">
-    <div id="layoutDefault">
-      <div id="layoutDefault_content" class="bg-light">
-        <main>
-          <div th:replace="~{fragments/pageNav :: pageNav}"></div>
-          <div
-            th:replace="~{fragments/pageHeader :: pageHeader(title='Admin Dashboard', icon='fa-shield')}"
-          ></div>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    crossorigin="anonymous"
+  />
+  <!-- Simple-DataTables CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+    rel="stylesheet"
+  />
+  <div th:replace="~{fragments/head :: head}"></div>
+</head>
+<body id="page-top" class="bg-dark">
+  <div id="layoutDefault">
+    <div id="layoutDefault_content" class="bg-light">
+      <main>
+        <div th:replace="~{fragments/pageNav :: pageNav}"></div>
+        <div
+          th:replace="~{fragments/pageHeader :: pageHeader(title='Admin Dashboard', icon='fa-shield')}"
+        ></div>
 
-          <!-- User Table -->
-          <div class="container-xl px-4">
-            <div class="card mb-4">
-              <div class="card-header">Users</div>
-              <div class="card-body">
-                <table id="datatablesUsers">
-                  <thead>
-                    <tr>
-                      <th>Id.</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Password</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Id.</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Actions</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr th:each="user : ${users}">
-                      <td th:text="${user.id}"></td>
-                      <td th:text="${user.name}"></td>
-                      <td th:text="${user.email}"></td>
-                      <td th:text="${user.password}"></td>
-                      <td>
-                        <a
-                          class="btn btn-datatable btn-icon btn-transparent-dark me-2"
-                          href="#"
-                        >
-                          <i class="fa-regular fa-pen-to-square"></i>
-                        </a>
-                        <a
-                          class="btn btn-datatable btn-icon btn-transparent-dark"
-                          href="#"
-                        >
-                          <i class="fa-regular fa-trash-can"></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+        <!-- User Table -->
+        <div class="container-xl px-4">
+          <div class="card mb-4">
+            <div class="card-header">Users</div>
+            <div class="card-body">
+              <table id="datatablesUsers" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Id.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.password}"></td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-link edit-user-button"
+                        th:data-user-id="${user.id}"
+                        th:data-user-name="${user.name}"
+                        th:data-user-email="${user.email}"
+                      >
+                        Edit
+                      </button>
+                      <!-- Include delete button if needed -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="container-xl px-4">
+          <div class="card mb-4">
+            <div class="card-header">Products</div>
+            <div class="card-body">
+              <table id="datatablesProducts" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Id.</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-link edit-product-button"
+                        th:data-product-id="${product.id}"
+                        th:data-product-name="${product.name}"
+                        th:data-product-description="${product.description}"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-link delete-product-button"
+                        th:data-product-id="${product.id}"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Product Modal -->
+        <div
+          class="modal fade"
+          id="editModal"
+          tabindex="-1"
+          aria-labelledby="editModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="editForm">
+                  <input type="hidden" id="editProductId" />
+                  <div class="mb-3">
+                    <label for="productName" class="form-label">Product Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="productName"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="productDescription" class="form-label"
+                      >Product Description</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="productDescription"
+                      rows="4"
+                      required
+                    ></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="saveChanges">
+                  Save Changes
+                </button>
               </div>
             </div>
           </div>
-
-          <!-- Products Table -->
-          <div class="container-xl px-4">
-            <div class="card mb-4">
-              <div class="card-header">Products</div>
-              <div class="card-body">
-                <table id="datatablesProducts">
-                  <thead>
-                    <tr>
-                      <th>Id.</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Price</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Id.</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Actions</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr th:each="product : ${products}" th:data-product-id="${product.id}">
-                      <!-- ID Column -->
-                      <td th:text="${product.id}"></td>
-
-                      <!-- Name Column -->
-                      <td th:text="${product.name}"></td>
-
-                      <!-- Description Column -->
-                      <td th:text="${product.description}"></td>
-
-                      <!-- Price Column -->
-                      <td th:text="${product.price}"></td>
-
-                      <!-- Actions Column -->
-                      <td>
-                        <button
-                          class="btn btn-sm btn-link edit-product-button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#editModal">
-                          <i class="fa fa-edit"></i> Edit
-                        </button>
-                        <button
-                          class="btn btn-sm btn-link delete-product-button"
-                          data-product-id="${product.id}">
-                          <i class="fa-regular fa-trash-can"></i> Delete
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- Edit Modal -->
-          <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="editForm">
-                    <input type="hidden" id="editProductId">
-                    <div class="mb-3">
-                      <label for="fieldSelect" class="form-label">Field to Edit</label>
-                      <select id="fieldSelect" class="form-select">
-                        <option value="name">Name</option>
-                        <option value="description">Description</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="newValue" class="form-label">New Value</label>
-                      <input type="text" class="form-control" id="newValue" />
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="saveChanges">Save Changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-      <div id="layoutDefault_footer">
-        <div th:replace="~{fragments/footer :: footer}"></div>
-      </div>
+        </div>
+      </main>
     </div>
-    <!-- Bootstrap core JS-->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Core theme JS-->
-    <script th:src="@{/js/datatables.js}"></script>
-    <script th:src="@{/js/scripts.js}"></script>
-    <script th:src="@{/js/auth.js}"></script>
-    <script th:src="@{/js/actions.js}"></script>
-    <script th:src="@{/js/admin.js}"></script>
-  </body>
+    <div id="layoutDefault_footer">
+      <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Simple-DataTables JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Core theme JS -->
+  <script th:src="@{/js/datatables.js}"></script>
+  <script th:src="@{/js/scripts.js}"></script>
+  <script th:src="@{/js/auth.js}"></script>
+  <script th:src="@{/js/actions.js}"></script>
+  <script th:src="@{/js/admin.js}"></script>
+</body>
 </html>
