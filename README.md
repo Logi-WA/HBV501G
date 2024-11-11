@@ -26,13 +26,13 @@
 8. `PATCH /api/users/me/password` *(2)*  
     Partially update resource details (e.g. update user profile, change multiple item details)
 9. `POST /api/cart` *(2)*  
-    Create an association between resources (e.g. Add item to users favourites)
+    Create an association between resources (e.g. Add item to users favorites)
 10. `POST /api/wishlist` *(2)*  
-    Create an association between resources (e.g. Add item to users favourites)
-11. `GET /api/cart/cart` / `GET /api/cart` *(2)*  
-    Retrieve associated resouces (e.g. User favourites, user orders)
-12. `GET /api/cart/wishlist` / `GET /api/wishlist` *(2)*  
-    Retrieve associated resouces (e.g. User favourites, user orders)
+    Create an association between resources (e.g. Add item to users favorites)
+11. `GET /api/cart` *(2)*  
+    Retrieve associated resources (e.g. User favorites, user orders)
+12. `GET /api/wishlist` *(2)*  
+    Retrieve associated resources (e.g. User favorites, user orders)
 13. `PATCH /api/cart/{id}` *(3)*  
     Update nested resource (e.g. update specific attributes of items in an order)
 

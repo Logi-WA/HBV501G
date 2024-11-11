@@ -67,7 +67,7 @@ function updateNavbarLoggedIn(userData) {
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/account">
             <div class="dropdown-item-icon">
-              <i data-feather="settings"></i>
+              <i class="fas fa-gear"></i>
             </div>
             Account
           </a>
@@ -79,7 +79,7 @@ function updateNavbarLoggedIn(userData) {
           </a>
           <a class="dropdown-item" href="#" onclick="logout()">
             <div class="dropdown-item-icon">
-              <i data-feather="log-out"></i>
+              <i class="fas fa-right-from-bracket"></i>
             </div>
             Logout
           </a>
@@ -88,10 +88,6 @@ function updateNavbarLoggedIn(userData) {
   `;
 
   navbar?.insertAdjacentHTML('beforeend', dropdownHtml);
-  // Re-initialize Feather icons
-  if (window.feather) {
-    window.feather.replace();
-  }
 }
 
 /**
@@ -121,10 +117,6 @@ function updateNavbarLoggedOut() {
   `;
 
   navbar?.insertAdjacentHTML('beforeend', loginButtonHtml);
-  // Re-initialize Feather icons
-  if (window.feather) {
-    window.feather.replace();
-  }
 }
 
 /**

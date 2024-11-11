@@ -25,17 +25,23 @@ buildSrc/build
 /integration-tests/build
 /src/asciidoc/build
 spring-test/test-output/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 # Maven artifacts
 #pom.xml
-/target/
+verzla/target/
+!verzla/.mvn/wrapper/maven-wrapper.jar
 
 # Eclipse artifacts, including WTP generated manifests
 bin
+.apt_generated
 .classpath
+.factorypath
 .project
 .settings
 .springBeans
+.sts4-cache
 spring-*/src/main/java/META-INF/MANIFEST.MF
 
 # IDEA artifacts and output dirs
@@ -53,3 +59,6 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 
 node_modules
+
+### Fonts ###
+# verzla/src/main/resources/static/fonts/**/*.otf
