@@ -1,29 +1,36 @@
 package is.hi.verzla.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Represents a wishlist associated with a user, containing multiple wishlist items.
+ * Represents a wishlist associated with a user, containing multiple wishlist
+ * items.
  * <p>
- * Each {@code Wishlist} is linked to a single {@link User} and can contain multiple
- * {@link WishlistItem} entries. This entity serves as a container for the products
+ * Each {@code Wishlist} is linked to a single {@link User} and can contain
+ * multiple
+ * {@link WishlistItem} entries. This entity serves as a container for the
+ * products
  * that a user wishes to purchase or save for later.
  * </p>
  *
  * <p>
- * The relationship between {@code Wishlist} and {@code WishlistItem} is bidirectional,
+ * The relationship between {@code Wishlist} and {@code WishlistItem} is
+ * bidirectional,
  * where each wishlist item knows its parent wishlist.
  * </p>
  *
@@ -51,8 +58,9 @@ public class Wishlist {
    * </p>
    */
   @NotNull(message = "User cannot be null")
-  @ManyToOne
+  @OneToOne
   @JoinColumn(name = "user_id")
+  @JsonBackReference
   private User user;
 
   /**
@@ -63,18 +71,15 @@ public class Wishlist {
    * alongside their parent wishlist.
    * </p>
    */
-  @OneToMany(
-    mappedBy = "wishlist",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true
-  )
+  @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
   private List<WishlistItem> wishlistItems = new ArrayList<>();
 
   /**
    * Default constructor for JPA.
    */
-  public Wishlist() {}
+  public Wishlist() {
+  }
 
   /**
    * Retrieves the unique identifier of this wishlist.

@@ -32,13 +32,13 @@ import jakarta.validation.Valid;
  * <p>
  * Supported operations include:
  * <ul>
- *   <li>Retrieving all users</li>
- *   <li>Retrieving a user by ID</li>
- *   <li>Creating a new user</li>
- *   <li>Updating user details</li>
- *   <li>Updating user passwords</li>
- *   <li>Deleting a user</li>
- *   <li>Managing the currently logged-in user's information</li>
+ * <li>Retrieving all users</li>
+ * <li>Retrieving a user by ID</li>
+ * <li>Creating a new user</li>
+ * <li>Updating user details</li>
+ * <li>Updating user passwords</li>
+ * <li>Deleting a user</li>
+ * <li>Managing the currently logged-in user's information</li>
  * </ul>
  * </p>
  *
@@ -50,8 +50,8 @@ import jakarta.validation.Valid;
 public class UserController {
 
   /**
-  * Service layer for handling user-related business logic.
-  */
+   * Service layer for handling user-related business logic.
+   */
   @Autowired
   private UserService userService;
 
@@ -175,21 +175,17 @@ public class UserController {
    * @return A {@link ResponseEntity} containing a confirmation message, or an
    *         error response if the deletion fails.
    *
-   * @apiNote Deleting a user should also handle cascading deletions or data integrity.
+   * @apiNote Deleting a user should also handle cascading deletions or data
+   *          integrity.
    */
-  @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+  @DeleteMapping("/{userId}")
+  public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
     try {
-      userService.deleteUser(id);
-      return ResponseEntity.ok("User deleted with id " + id);
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body(e.getMessage());
+      userService.deleteUser(userId);
+      return ResponseEntity.ok("User deleted successfully");
     } catch (Exception e) {
-      return ResponseEntity
-          .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body("Error deleting user");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Error deleting user: " + e.getMessage());
     }
   }
 
@@ -197,10 +193,12 @@ public class UserController {
    * Retrieves the currently logged-in user from the session.
    *
    * @param session The current HTTP session.
-   * @return A {@link ResponseEntity} containing the {@link User} entity if logged in,
+   * @return A {@link ResponseEntity} containing the {@link User} entity if logged
+   *         in,
    *         or an unauthorized response if not.
    *
-   * @apiNote This endpoint is useful for frontend applications to fetch user details.
+   * @apiNote This endpoint is useful for frontend applications to fetch user
+   *          details.
    */
   @GetMapping("/me")
   public ResponseEntity<?> getCurrentUser(HttpSession session) {
@@ -257,7 +255,8 @@ public class UserController {
    * Updates the password of the currently logged-in user.
    *
    * @param passwords A {@code Map} containing the current and new passwords.
-   *                  Expected keys: {@code "currentPassword"} and {@code "newPassword"}.
+   *                  Expected keys: {@code "currentPassword"} and
+   *                  {@code "newPassword"}.
    * @param session   The current HTTP session.
    * @return A {@link ResponseEntity} containing a confirmation message or an
    *         error response if the current password is incorrect or not logged in.
@@ -300,9 +299,9 @@ public class UserController {
   }
 
   /**
-  * Inner static class representing the payload for adding a product to the
-  * shopping cart.
-  */
+   * Inner static class representing the payload for adding a product to the
+   * shopping cart.
+   */
   public static class ProductRequest {
     /**
      * The ID of the product to be added to the cart.

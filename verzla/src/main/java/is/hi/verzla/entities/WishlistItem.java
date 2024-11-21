@@ -60,7 +60,6 @@ public class WishlistItem {
    * Cannot be null. Represents the specific wishlist that the user has created.
    * </p>
    */
-  @NotNull(message = "Wishlist cannot be null")
   @ManyToOne
   @JoinColumn(name = "wishlist_id")
   private Wishlist wishlist;
@@ -68,7 +67,8 @@ public class WishlistItem {
   /**
    * Default constructor for JPA.
    */
-  public WishlistItem() {}
+  public WishlistItem() {
+  }
 
   /**
    * Retrieves the unique identifier of this wishlist item.

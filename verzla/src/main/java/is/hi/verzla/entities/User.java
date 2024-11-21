@@ -1,23 +1,30 @@
 package is.hi.verzla.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 /**
- * Represents a user in the e-commerce system, including their name, email, and password.
+ * Represents a user in the e-commerce system, including their name, email, and
+ * password.
  * <p>
- * Each {@code User} has a unique email address and can be associated with multiple
+ * Each {@code User} has a unique email address and can be associated with
+ * multiple
  * {@link Wishlist} and {@link Cart} entities.
  * </p>
  *
  * <p>
- * Passwords should be securely hashed before being stored to ensure user security.
+ * Passwords should be securely hashed before being stored to ensure user
+ * security.
  * </p>
  */
 @Entity
@@ -63,6 +70,14 @@ public class User {
   @NotEmpty(message = "Password cannot be empty")
   @Column(nullable = false)
   private String password;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference
+  private Cart cart;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference
+  private Wishlist wishlist;
 
   /**
    * Default constructor for JPA.
@@ -153,5 +168,21 @@ public class User {
    */
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public Cart getCart() {
+    return cart;
+  }
+
+  public void setCart(Cart cart) {
+    this.cart = cart;
+  }
+
+  public Wishlist getWishlist() {
+    return wishlist;
+  }
+
+  public void setWishlist(Wishlist wishlist) {
+    this.wishlist = wishlist;
   }
 }

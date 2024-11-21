@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import is.hi.verzla.entities.Cart;
 import is.hi.verzla.entities.User;
+import is.hi.verzla.entities.Wishlist;
+import is.hi.verzla.repositories.CartRepository;
 import is.hi.verzla.repositories.UserRepository;
+import is.hi.verzla.repositories.WishlistRepository;
 import is.hi.verzla.services.UserService;
 
 /**
- * Implementation of the {@link UserService} interface. Provides methods for managing users, including
+ * Implementation of the {@link UserService} interface. Provides methods for
+ * managing users, including
  * creating, updating, retrieving, and deleting user accounts.
  */
 @Service
@@ -20,6 +25,12 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private CartRepository cartRepository;
+
+  @Autowired
+  private WishlistRepository wishlistRepository;
 
   /**
    * Retrieves a list of all users.
@@ -41,8 +52,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public User getUserById(Long id) {
     return userRepository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found with id " + id));
   }
 
   /**
@@ -59,16 +70,17 @@ public class UserServiceImpl implements UserService {
   /**
    * Updates the details of an existing user.
    *
-   * @param id The ID of the user to update.
+   * @param id          The ID of the user to update.
    * @param userDetails The {@link User} object containing updated details.
    * @return The updated {@link User} object.
-   * @throws RuntimeException if the user with the specified ID is not found or if the new email is already in use.
+   * @throws RuntimeException if the user with the specified ID is not found or if
+   *                          the new email is already in use.
    */
   @Override
   public User updateUser(Long id, User userDetails) {
     User user = userRepository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
     if (userDetails.getName() != null && !userDetails.getName().isEmpty()) {
       user.setName(userDetails.getName());
@@ -88,17 +100,35 @@ public class UserServiceImpl implements UserService {
   /**
    * Deletes a user by their ID.
    *
-   * @param id The ID of the user to delete.
+   * @param userId The ID of the user to delete.
    */
   @Override
-  public void deleteUser(Long id) {
-    userRepository.deleteById(id);
+  @Transactional
+  public void deleteUser(Long userId) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
+
+    Cart cart = user.getCart();
+    if (cart != null) {
+      cart.getCartItems().clear();
+      cartRepository.save(cart);
+      cartRepository.delete(cart);
+    }
+
+    Wishlist wishlist = user.getWishlist();
+    if (wishlist != null) {
+      wishlist.getWishlistItems().clear();
+      wishlistRepository.save(wishlist);
+      wishlistRepository.delete(wishlist);
+    }
+
+    userRepository.delete(user);
   }
 
   /**
    * Updates the password of an existing user.
    *
-   * @param id The ID of the user whose password will be updated.
+   * @param id          The ID of the user whose password will be updated.
    * @param newPassword The new password to set.
    * @return The updated {@link User} object.
    * @throws RuntimeException if the user with the specified ID is not found.
@@ -106,8 +136,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public User updatePassword(Long id, String newPassword) {
     User user = userRepository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found with id " + id));
     user.setPassword(newPassword);
     return userRepository.save(user);
   }
@@ -116,7 +146,8 @@ public class UserServiceImpl implements UserService {
    * Retrieves a user by their email.
    *
    * @param email The email of the user to retrieve.
-   * @return The {@link User} object with the specified email, or {@code null} if not found.
+   * @return The {@link User} object with the specified email, or {@code null} if
+   *         not found.
    */
   @Override
   public User getUserByEmail(String email) {

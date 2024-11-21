@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import is.hi.verzla.entities.CartItem;
 import is.hi.verzla.entities.Category;
@@ -61,7 +62,7 @@ public class ViewController {
    * Handles requests to the account management page.
    *
    * @param session The current HTTP session to verify user login.
-   * @param model Model to pass data to the view.
+   * @param model   Model to pass data to the view.
    * @return The name of the view for the account page ("account") or redirects
    *         to the home page if the user is not logged in.
    */
@@ -82,7 +83,7 @@ public class ViewController {
    * Handles requests to view the shopping cart.
    *
    * @param session The current HTTP session to verify user login.
-   * @param model Model to pass data to the view.
+   * @param model   Model to pass data to the view.
    * @return The name of the view for the shopping cart ("cart") or redirects to
    *         the home page if the user is not logged in.
    */
@@ -103,7 +104,7 @@ public class ViewController {
    * Handles requests to view the wishlist.
    *
    * @param session The current HTTP session to verify user login.
-   * @param model Model to pass data to the view.
+   * @param model   Model to pass data to the view.
    * @return The name of the view for the wishlist ("wishlist") or redirects to
    *         the home page if the user is not logged in.
    */
@@ -133,5 +134,16 @@ public class ViewController {
     model.addAttribute("users", users);
 
     return "admin";
+  }
+
+  @GetMapping("/product/{id}")
+  public String productDetail(@PathVariable Long id, Model model) {
+    try {
+      Product product = productService.getProductById(id);
+      model.addAttribute("product", product);
+      return "product-detail";
+    } catch (RuntimeException e) {
+      return "redirect:/";
+    }
   }
 }

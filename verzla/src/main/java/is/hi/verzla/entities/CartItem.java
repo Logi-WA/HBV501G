@@ -53,7 +53,6 @@ public class CartItem {
    * Cannot be null. Represents the specific shopping cart that the user has.
    * </p>
    */
-  @NotNull(message = "Cart cannot be null")
   @ManyToOne
   @JoinColumn(name = "cart_id", nullable = false)
   private Cart cart;

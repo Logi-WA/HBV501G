@@ -42,14 +42,15 @@ function attachEventListeners() {
   // Add event listener to the container, listening for button clicks
   container.addEventListener('click', async (event) => {
     // Prevent scrolling
-    event.preventDefault();
-
+    
     const target = event.target;
-
+    
     if (target.closest('.btn')?.classList.contains('addToWish')) {
+      event.preventDefault();
       const productId = getProductIdFromCard(target);
       await addToWishlist(productId);
     } else if (target.closest('.btn')?.classList.contains('addToCart')) {
+      event.preventDefault();
       const productId = getProductIdFromCard(target);
       await addToCart(productId);
     }

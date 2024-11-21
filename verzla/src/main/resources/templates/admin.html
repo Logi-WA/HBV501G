@@ -48,14 +48,13 @@
                     <td>
                       <button
                         type="button"
-                        class="btn btn-sm btn-link edit-user-button"
+                        class="btn btn-sm btn-link delUserBtn"
                         th:data-user-id="${user.id}"
                         th:data-user-name="${user.name}"
                         th:data-user-email="${user.email}"
                       >
-                        Edit
+                        <i class="fas fa-trash-can"></i>
                       </button>
-                      <!-- Include delete button if needed -->
                     </td>
                   </tr>
                 </tbody>
@@ -93,11 +92,11 @@
                         th:data-product-name="${product.name}"
                         th:data-product-description="${product.description}"
                       >
-                        Edit
+                        <i class="fas fa-pen-to-square"></i>
                       </button>
                       <button
                         type="button"
-                        class="btn btn-sm btn-link delete-product-button"
+                        class="btn btn-sm btn-link delete-product-button d-none"
                         th:data-product-id="${product.id}"
                       >
                         Delete

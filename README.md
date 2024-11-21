@@ -64,3 +64,12 @@ New view `admin` added. Accessible in the dropdown menu in the top right for log
     Button has been added to the wishlist page that remove all items from the users wishlist
 11. `POST /api/cart/buy` *(3)* - (Submit batch data)
     Button has been added to the cart page that 'buys' all items in the users cart
+
+## Assignment 5
+
+### Ass. 5 - Functional Endpoints
+
+1. `GET /product/{id}` *(1)*
+   Returns a view of a single product page
+2. `DELETE /api/users/{userId}` *(2)*
+   Deletes a user and every orphan the has.
